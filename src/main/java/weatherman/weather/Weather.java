@@ -19,7 +19,7 @@ import com.google.gson.JsonPrimitive;
 
 public class Weather {
 
-	String apiKey = "YOUR-API-KEY";
+	String apiKey = "9c85a76180a8d5953e3bde8bd5196d32";
 	HashMap<String,String> cityCodes;
 	
 	
