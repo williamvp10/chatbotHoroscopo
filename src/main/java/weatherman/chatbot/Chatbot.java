@@ -1,206 +1,172 @@
-package weatherman.chatbot;
+package chatbot;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import java.io.IOException;
 import java.util.Scanner;
 
-import org.apache.http.client.ClientProtocolException;
-
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-
-import weatherman.weather.Weather;
+import com.google.gson.JsonParser;
 
 public class Chatbot {
 
-	JsonObject context;
-	Weather weather;
-	
-	public static void main(String[] args){
-		Chatbot c = new Chatbot();
-		Scanner scanner = new Scanner(System.in);
-		String userUtterance;
-		
-		do {
-			System.out.print("User:");
-			userUtterance = scanner.nextLine();
-			
-			JsonObject userInput = new JsonObject();
-			userInput.add("userUtterance", new JsonPrimitive(userUtterance));
-			JsonObject botOutput = c.process(userInput);
-			String botUtterance = "";
-			if (botOutput != null && botOutput.has("botUtterance")) {
-				botUtterance = botOutput.get("botUtterance").getAsString();
-			}
-			System.out.println("Bot:" + botUtterance);
-			
-		} while (!userUtterance.equals("QUIT"));
-		scanner.close();
-	}
-	
-	public Chatbot(){
-		context = new JsonObject();
-		context.add("currentTask", new JsonPrimitive("none"));
-		weather = new Weather();
-	}
-	
-	public JsonObject process(JsonObject userInput){
-		
-		//step1: process user input
-		JsonObject userAction = processUserInput(userInput);
-		
-		//step2: update context
-		updateContext(userAction);
-		
-		//step3: identify bot intent
-		identifyBotIntent();
-		
-		//step4: structure output
-		JsonObject out = getBotOutput();
-		
-		return out;
-	}
-	
-	public String processFB(JsonObject userInput){
-		JsonObject out = process(userInput);
-		return out.toString();
-	}
-	
-	public JsonObject processUserInput(JsonObject userInput){
-		String userUtterance = null;
-		JsonObject userAction = new JsonObject();
-		
-		//default case
-		userAction.add("userIntent", new JsonPrimitive(""));
-		
-		
-		if (userInput.has("userUtterance")){
-			userUtterance = userInput.get("userUtterance").getAsString();
-			userUtterance = userUtterance.replaceAll("%2C", ",");
-		}
-		if (userUtterance.matches("(hi|hello)( there)?")){
-			userAction.add("userIntent", new JsonPrimitive("greet"));
-		}
-		else if (userUtterance.matches("(thanks)|(thank you)")){
-			userAction.add("userIntent", new JsonPrimitive("thank"));
-		}
-		else if (userUtterance.matches("current weather") || userUtterance.matches("weather now")){
-			userAction.add("userIntent", new JsonPrimitive("request_current_weather"));
-		}
-		else {
-			String currentTask = context.get("currentTask").getAsString();
-			String botIntent = context.get("botIntent").getAsString();
-			if (currentTask.equals("requestWeather") && 
-					botIntent.equals("requestPlace")){
-				JsonObject cityInfo = weather.getCityCode(userUtterance);
-				if (!cityInfo.get("cityCode").isJsonNull()){
-					userAction.add("userIntent", new JsonPrimitive("informCityCode"));
-					userAction.add("cityCode", cityInfo.get("cityCode"));
-					userAction.add("cityName", new JsonPrimitive(userUtterance));
-				}
-			}
-		}
-		
-		return userAction;
-	}
-	
-	public void updateContext(JsonObject userAction){
-		
-		//copy userIntent
-		context.add("userIntent", userAction.get("userIntent"));
-		
-		//
-		String userIntent = context.get("userIntent").getAsString();
-		if (userIntent.equals("greet")){
-			context.add("currentTask", new JsonPrimitive("greetUser"));
-		}
-		else if (userIntent.equals("request_current_weather")){
-			context.add("currentTask", new JsonPrimitive("requestWeather"));
-			context.add("timeOfWeather", new JsonPrimitive("current"));
-			context.add("placeOfWeather", new JsonPrimitive("unknown"));
-			context.add("placeName", new JsonPrimitive("unknown"));
-		}
-		else if (userIntent.equals("informCityCode")){
-			context.add("placeOfWeather", userAction.get("cityCode"));
-			context.add("placeName", userAction.get("cityName"));
-		}
-		else if (userIntent.equals("thank")){
-			context.add("currentTask", new JsonPrimitive("thankUser"));
-		}
-	}
-	
-	public void identifyBotIntent(){
-		String currentTask = context.get("currentTask").getAsString();
-		if (currentTask.equals("greetUser")){
-			context.add("botIntent", new JsonPrimitive("greetUser"));
-		}
-		else if (currentTask.equals("thankUser")){
-			context.add("botIntent", new JsonPrimitive("thankUser"));
-		}
-		else if (currentTask.equals("requestWeather")){
-			if (context.get("placeOfWeather").getAsString().equals("unknown")){
-				context.add("botIntent", new JsonPrimitive("requestPlace"));
-			} 
-			else {
-				Integer time = -1;
-				if (context.get("timeOfWeather").getAsString().equals("current")){
-					time = 0;
-				}
-				String weatherReport = null;
-				try {
-					weatherReport = weather.getWeatherReport(context.get("placeOfWeather").getAsString(), time);
-				} catch (ClientProtocolException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				if (weatherReport != null){
-					context.add("weatherReport", new JsonPrimitive(weatherReport));
-					context.add("botIntent", new JsonPrimitive("informWeather"));
-				}
-			}
-		}
-		else {
-			context.add("botIntent", null);
-		}
-	}
-	
-	public JsonObject getBotOutput(){
-		
-		JsonObject out = new JsonObject();
-		String botIntent = context.get("botIntent").getAsString();
-		
-		String botUtterance = "";
-		if (botIntent.equals("greetUser")){
-			botUtterance = "Hi there! I am WeatherMan, your weather bot! "
-					+ "What would you like to know? Current weather or forecast?";
-		}
-		else if (botIntent.equals("thankUser")){
-			botUtterance = "Thanks for talking to me! Have a great day!!";
-		}
-		else if (botIntent.equals("requestPlace")){
-			botUtterance = "Ok. Which city?";
-		}
-		else if (botIntent.equals("informWeather")){
-			String timeDescription  = getTimeDescription(context.get("timeOfWeather").getAsString());
-			String placeDescription = getPlaceDescription();
-			String weatherReport = context.get("weatherReport").getAsString();
-			botUtterance = "Ok. Weather " + timeDescription + " in " + placeDescription + ". " + 
-							weatherReport;
-					
-		}
-		out.add("botIntent", context.get("botIntent"));
-		out.add("botUtterance", new JsonPrimitive(botUtterance));
-		return out;
-	}
+    JsonObject context;
 
-	private String getPlaceDescription() {
-		return context.get("placeName").getAsString();
-	}
+    public static void main(String[] args) throws IOException {
+        Chatbot c = new Chatbot();
+        Scanner scanner = new Scanner(System.in);
+        String userUtterance;
 
-	private String getTimeDescription(String timeOfWeather) {
-		if (timeOfWeather.equals("current")){
-			return "now";
-		}
-		return null;
-	}
+        do {
+            System.out.print("User:");
+            userUtterance = scanner.nextLine();
+
+            JsonObject userInput = new JsonObject();
+            userInput.add("userUtterance", new JsonPrimitive(userUtterance));
+            JsonObject botOutput = c.process(userInput);
+            String botUtterance = "";
+            if (botOutput != null && botOutput.has("botUtterance")) {
+                botUtterance = botOutput.get("botUtterance").getAsString();
+            }
+            System.out.println("Bot:" + botUtterance);
+
+        } while (!userUtterance.equals("QUIT"));
+        scanner.close();
+    }
+
+    public Chatbot() {
+        context = new JsonObject();
+        context.add("currentTask", new JsonPrimitive("none"));
+    }
+
+    public JsonObject process(JsonObject userInput) throws IOException {
+        System.out.println(userInput.toString());
+        //step1: process user input
+        JsonObject userAction = processUserInput(userInput);
+
+        //step2: update context
+        updateContext(userAction);
+
+        //step3: identify bot intent
+        identifyBotIntent();
+        System.out.println("context " + context.toString());
+        //step4: structure output
+        JsonObject out = getBotOutput();
+        System.out.println("out " + out.toString());
+        return out;
+    }
+
+    public String processFB(JsonObject userInput) throws IOException {
+        JsonObject out = process(userInput);
+        return out.toString();
+    }
+
+    public JsonObject processUserInput(JsonObject userInput) throws IOException {
+        String userUtterance = null;
+        JsonObject userAction = new JsonObject();
+        //default case
+        userAction.add("userIntent", new JsonPrimitive(""));
+        if (userInput.has("userUtterance")) {
+            userUtterance = userInput.get("userUtterance").getAsString();
+            userUtterance = userUtterance.replaceAll("%2C", ",");
+        }
+        if (userUtterance.matches("hola")) {
+            userAction.add("userIntent", new JsonPrimitive("intenthola"));
+        } else {
+            String userType = " n ";
+            if (userInput.has("userType")) {
+                userType = userInput.get("userType").getAsString();
+                userType = userType.replaceAll("%2C", ",");
+            }
+
+            if (userType != null) {
+                if (userType.trim().equals("requestsaludo")) {
+                    userAction.add("userIntent", new JsonPrimitive("intentsaludo"));
+                    context.add("saludo", new JsonPrimitive(userUtterance));
+
+                } else if (userType.trim().equals("requestbye")) {
+                    userAction.add("userIntent", new JsonPrimitive("intentbye"));
+                    context.add("bye", new JsonPrimitive(userUtterance));
+
+                }
+            }
+        }
+        return userAction;
+    }
+
+    public void updateContext(JsonObject userAction) {
+        //copy userIntent
+        context.add("userIntent", userAction.get("userIntent"));
+        String userIntent = context.get("userIntent").getAsString();
+        if (userIntent.equals("intenthola")) {
+            context.add("currentTask", new JsonPrimitive("taskhola"));
+        } else if (userIntent.equals("intentsaludo")) {
+            context.add("currentTask", new JsonPrimitive("tasksaludo"));
+        } else if (userIntent.equals("intentbye")) {
+            context.add("currentTask", new JsonPrimitive("taskbye"));
+        }
+    }
+
+    public void identifyBotIntent() {
+        String currentTask = context.get("currentTask").getAsString();
+        if (currentTask.equals("taskhola")) {
+            context.add("botIntent", new JsonPrimitive("bothola"));
+        } else if (currentTask.equals("tasksaludo")) {
+            context.add("botIntent", new JsonPrimitive("botsaludo"));
+        } else if (currentTask.equals("taskbye")) {
+            context.add("botIntent", new JsonPrimitive("botbye"));
+        }
+    }
+
+    public JsonObject getBotOutput() throws IOException {
+
+        JsonObject out = new JsonObject();
+        String botIntent = context.get("botIntent").getAsString();
+        JsonArray buttons = new JsonArray();
+        String botUtterance = "";
+        String type = "";
+        if (botIntent.equals("bothola")) {
+            botUtterance = "hola ";
+            type = "saludo";
+            JsonObject b = null;
+            b = new JsonObject();
+            b.add("titulo", new JsonPrimitive("continuar"));
+            b.add("respuesta", new JsonPrimitive("bye"));
+            buttons.add(b);
+            b = new JsonObject();
+            b.add("titulo", new JsonPrimitive("salir"));
+            b.add("respuesta", new JsonPrimitive("error"));
+            buttons.add(b);
+            out.add("buttons", buttons);
+        } else if (botIntent.equals("botsaludo")) {
+            type = "saludo";
+            botUtterance = "hola";
+            JsonObject b = null;
+            b = new JsonObject();
+            b.add("titulo", new JsonPrimitive("continuar"));
+            b.add("respuesta", new JsonPrimitive("bye"));
+            buttons.add(b);
+            b = new JsonObject();
+            b.add("titulo", new JsonPrimitive("salir"));
+            b.add("respuesta", new JsonPrimitive("error"));
+            buttons.add(b);
+            out.add("buttons", buttons);
+        } else if (botIntent.equals("botbye")) {
+            type = "bye";
+            botUtterance = "adios";
+            JsonObject b = null;
+            b = new JsonObject();
+            b.add("titulo", new JsonPrimitive("regresar"));
+            b.add("respuesta", new JsonPrimitive("saludo"));
+            buttons.add(b);
+            out.add("buttons", buttons);
+        }
+        out.add("botIntent", context.get("botIntent"));
+        out.add("botUtterance", new JsonPrimitive(botUtterance));
+        out.add("type", new JsonPrimitive(type));
+        System.out.println("context: " + context.toString());
+        System.out.println("salida: " + out.toString());
+        return out;
+    }
 }
