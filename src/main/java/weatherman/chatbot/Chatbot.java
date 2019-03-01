@@ -1,4 +1,4 @@
-package chatbot;
+package weatherman.chatbot;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
