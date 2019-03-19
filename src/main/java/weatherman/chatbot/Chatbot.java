@@ -88,8 +88,10 @@ public class Chatbot {
         } else {
             String userType = " ";
             if (userInput.has("userType")) {
+                 System.out.println("type::: "+ userInput.get("userType").getAsString());
                 userType = userInput.get("userType").getAsString();
-                userType = userType.replaceAll("%2C", ",").replaceAll("%3A", ":");
+                System.out.println("type "+ userType);
+                userType = userType.replaceAll("%2C", ",");
             }
             System.out.println("type "+ userType);
             if (userType != null) {
