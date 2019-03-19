@@ -86,12 +86,12 @@ public class Chatbot {
         if (userUtterance.matches("hola")) {
             userAction.add("userIntent", new JsonPrimitive("intenthola"));
         } else {
-            String userType = " n ";
+            String userType = " ";
             if (userInput.has("userType")) {
                 userType = userInput.get("userType").getAsString();
-                userType = userType.replaceAll("%2C", ",");
+                userType = userType.replaceAll("%2C", ",").replaceAll("%3A", ":");
             }
-
+            System.out.println("type "+ userType);
             if (userType != null) {
                 String[] entrada = userType.split(":");
                 System.out.println("type "+ entrada[0]);
