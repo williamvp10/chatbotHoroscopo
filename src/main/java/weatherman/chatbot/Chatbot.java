@@ -260,17 +260,14 @@ public class Chatbot {
             JsonArray elements = new JsonArray();
             JsonObject e = null;
             JsonObject obj = null;
-            System.out.println("entro");
             JsonObject servicio = service.getAllSensors();
-            System.out.println("salio");
-            System.out.println(servicio);
             JsonArray elementosServicio = (JsonArray) servicio.get("sensores").getAsJsonArray();
 
             for (int i = 0; i < elementosServicio.size(); i++) {
                 e = new JsonObject();
                 obj = elementosServicio.get(i).getAsJsonObject();
                 System.out.println("obj:"+obj);
-                e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString() + " \n estado:" + obj.get("estado").getAsString() + "\n temperatura" + obj.get("temperatura").getAsString()));
+                e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString() + "  estado:" + obj.get("estado").getAsString() + " temperatura" + obj.get("temperatura").getAsString()));
                 elements.add(e);
             }
             out.add("elements", elements);
@@ -284,10 +281,12 @@ public class Chatbot {
             JsonObject obj = null;
             JsonObject servicio = service.getIDSensor();
             JsonArray elementosServicio = (JsonArray) servicio.get("sensores").getAsJsonArray();
-
+            System.out.println("salio");
+            System.out.println(servicio);
             for (int i = 0; i < elementosServicio.size(); i++) {
                 e = new JsonObject();
                 obj = elementosServicio.get(i).getAsJsonObject();
+                System.out.println("obj:"+obj);
                 e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString()));
                 b = new JsonObject();
                 b1 = new JsonArray();
