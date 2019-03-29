@@ -266,9 +266,11 @@ public class Chatbot {
             for (int i = 0; i < elementosServicio.size(); i++) {
                 e = new JsonObject();
                 obj = elementosServicio.get(i).getAsJsonObject();
-                System.out.println("obj:"+obj);
                 e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString() + "  estado:" + obj.get("estado").getAsString() + " temperatura" + obj.get("temperatura").getAsString()));
+                String var = "" + "id-" + obj.get("id").getAsString() + "--" + "estado-" + obj.get("estado").getAsString()+ "--" + "temperatura-" + obj.get("temperatura").getAsString();
+                b.add("respuesta", new JsonPrimitive("requestSensor:sensor:" + var));
                 elements.add(e);
+                System.out.println("obj:"+elements);
             }
             out.add("elements", elements);
         } else if (botIntent.equals("botIDSensor")) {
