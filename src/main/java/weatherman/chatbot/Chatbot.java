@@ -266,6 +266,7 @@ public class Chatbot {
             for (int i = 0; i < elementosServicio.size(); i++) {
                 e = new JsonObject();
                 obj = elementosServicio.get(i).getAsJsonObject();
+                System.out.println("obj:"+obj.getAsString());
                 e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString() + " \n estado:" + obj.get("estado").getAsString() + "\n temperatura" + obj.get("temperatura").getAsString()));
                 elements.add(e);
             }
