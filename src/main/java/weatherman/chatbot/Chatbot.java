@@ -268,7 +268,7 @@ public class Chatbot {
                 obj = elementosServicio.get(i).getAsJsonObject();
                 System.out.println("obj:"+obj);
                 System.out.println(" "+obj.get("id").getAsString());
-                e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString() + "  estado:" + obj.get("estado").getAsString() + " temperatura" + obj.get("temperatura").getAsString()));
+                e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString() + "  estado:" + obj.get("estado").getAsString() + " temperatura:" + obj.get("temperatura").getAsString()));
                 elements.add(e);
                 System.out.println(" elementos "+elements);
             }
@@ -292,7 +292,7 @@ public class Chatbot {
                 e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString()));
                 b = new JsonObject();
                 b1 = new JsonArray();
-                b.add("titulo", new JsonPrimitive(obj.get("Seleccionar").getAsString()));
+                b.add("titulo", new JsonPrimitive("Seleccionar"));
                 String var = "" + "id-" + obj.get("id").getAsString() + "--" + "estado-" + obj.get("estado").getAsString() + "--" + "temperatura-" + obj.get("temperatura").getAsString();
                 b.add("respuesta", new JsonPrimitive("requestInfoSensor:IDSensor:" + var));
                 b1.add(b);
