@@ -261,6 +261,7 @@ public class Chatbot {
             JsonObject e = null;
             JsonObject obj = null;
             JsonObject servicio = service.getAllSensors();
+            System.out.println(servicio.getAsString());
             JsonArray elementosServicio = (JsonArray) servicio.get("sensores").getAsJsonArray();
 
             for (int i = 0; i < elementosServicio.size(); i++) {
