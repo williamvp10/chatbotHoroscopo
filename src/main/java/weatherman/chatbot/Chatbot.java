@@ -263,13 +263,13 @@ public class Chatbot {
             System.out.println("entro");
             JsonObject servicio = service.getAllSensors();
             System.out.println("salio");
-            System.out.println(servicio.getAsString());
+            System.out.println(servicio);
             JsonArray elementosServicio = (JsonArray) servicio.get("sensores").getAsJsonArray();
 
             for (int i = 0; i < elementosServicio.size(); i++) {
                 e = new JsonObject();
                 obj = elementosServicio.get(i).getAsJsonObject();
-                System.out.println("obj:"+obj.getAsString());
+                System.out.println("obj:"+obj);
                 e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString() + " \n estado:" + obj.get("estado").getAsString() + "\n temperatura" + obj.get("temperatura").getAsString()));
                 elements.add(e);
             }
