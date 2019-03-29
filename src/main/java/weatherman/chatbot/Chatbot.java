@@ -269,10 +269,8 @@ public class Chatbot {
                 System.out.println("obj:"+obj);
                 System.out.println(" "+obj.get("id").getAsString());
                 e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString() + "  estado:" + obj.get("estado").getAsString() + " temperatura" + obj.get("temperatura").getAsString()));
-                String var = "" + "id-" + obj.get("id").getAsString() + "--" + "estado-" + obj.get("estado").getAsString()+ "--" + "temperatura-" + obj.get("temperatura").getAsString();
-                b.add("respuesta", new JsonPrimitive("requestSensor:sensor:" + var));
                 elements.add(e);
-                
+                System.out.println(" elementos "+elements);
             }
             out.add("elements", elements);
         } else if (botIntent.equals("botIDSensor")) {
