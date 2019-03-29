@@ -19,9 +19,9 @@ public class Service1 {
     public Service1() {
     }
 
-    public JsonObject getProducto()
+    public JsonObject getAllSensors()
             throws ClientProtocolException, IOException {
-        String url = "https://servicemecatobot.herokuapp.com/myApp/rest/products";
+        String url = "http://demo5917714.mockable.io/sensor";
 
         //step 2: Create a HTTP client
         HttpClient httpclient = HttpClientBuilder.create().build();
@@ -44,9 +44,9 @@ public class Service1 {
         return json;
     }
 
-    public JsonObject getIngredientes(String Producto)
+    public JsonObject getIDSensor()
             throws ClientProtocolException, IOException {
-        String url = "https://servicemecatobot.herokuapp.com/myApp/rest/products" + "/" + Producto.trim();
+        String url = "http://demo5917714.mockable.io/sensor";
 
         //step 2: Create a HTTP client
         HttpClient httpclient = HttpClientBuilder.create().build();
@@ -69,10 +69,10 @@ public class Service1 {
         return json;
     }
 
-    public JsonObject getTiendas(String producto,String Ingredientes)
+    public JsonObject getInfoSensor(String sensores)
             throws ClientProtocolException, IOException {
-        String url = "https://servicemecatobot.herokuapp.com/myApp/rest/tiendas"+ "/" + producto.trim() + "/" + Ingredientes.trim();
-        System.out.println(url);
+        String url = "http://demo5917714.mockable.io/sensor" + "/" + sensores.trim();
+
         //step 2: Create a HTTP client
         HttpClient httpclient = HttpClientBuilder.create().build();
 

@@ -16,9 +16,9 @@ public class Chatbot {
     JsonObject context;
     Service1 service;
 
-    Productor cProducto;
-    ArrayList<Ingredientes> cIngredientes;
-    Tiendas cTiendas;
+    AllSensors cAllSensors;
+    IDSensor cIDSensor;
+    InfoSensor cInfoSensor;
 
     public static void main(String[] args) throws IOException {
         Chatbot c = new Chatbot();
@@ -46,9 +46,9 @@ public class Chatbot {
         context = new JsonObject();
         context.add("currentTask", new JsonPrimitive("none"));
         service = new Service1();
-        this.cProducto = new Productor();
-        this.cIngredientes = new ArrayList<>();
-        this.cTiendas = new Tiendas();
+        this.cAllSensors = new AllSensors();
+        this.cIDSensor = new IDSensor();
+        this.cInfoSensor = new InfoSensor();
     }
 
     public JsonObject process(JsonObject userInput) throws IOException {
@@ -85,63 +85,61 @@ public class Chatbot {
 
         if (userUtterance.matches("hola")) {
             userAction.add("userIntent", new JsonPrimitive("intenthola"));
+        } else if (userUtterance.matches("opciones")) {
+            userAction.add("userIntent", new JsonPrimitive("intentopciones"));
         } else {
-            String userType = " ";
+            String userType = " n ";
             if (userInput.has("userType")) {
-                 System.out.println("type::: "+ userInput.get("userType").getAsString());
                 userType = userInput.get("userType").getAsString();
-                System.out.println("type "+ userType);
                 userType = userType.replaceAll("%2C", ",");
             }
-            System.out.println("type "+ userType);
+
             if (userType != null) {
                 String[] entrada = userType.split(":");
-                System.out.println("type "+ entrada[0]);
-                if (entrada[0].trim().equals("requestProducto")) {
-                    userAction.add("userIntent", new JsonPrimitive("intentProducto"));
-                } else if (entrada[0].trim().equals("requestIngredientes")) {
-                    userAction.add("userIntent", new JsonPrimitive("intentIngredientes"));
-                } else if (entrada[0].trim().equals("requestTiendas")) {
-                    userAction.add("userIntent", new JsonPrimitive("intentTiendas"));
-                } else if (entrada[0].trim().equals("requestfinalizar")) {
-                    userAction.add("userIntent", new JsonPrimitive("intentfinalizar"));
-                } else if (entrada[0].trim().equals("requestResultados")) {
-                    userAction.add("userIntent", new JsonPrimitive("intentResultados"));
+                if (entrada[0].trim().equals("requestSaludo")) {
+                    userAction.add("userIntent", new JsonPrimitive("intentSaludo"));
+                } else if (entrada[0].trim().equals("requestMenuOpciones")) {
+                    userAction.add("userIntent", new JsonPrimitive("intentMenuOpciones"));
+                } else if (entrada[0].trim().equals("requestAllSensors")) {
+                    userAction.add("userIntent", new JsonPrimitive("intentAllSensors"));
+                } else if (entrada[0].trim().equals("requestIDSensor")) {
+                    userAction.add("userIntent", new JsonPrimitive("intentIDSensor"));
+                } else if (entrada[0].trim().equals("requestInfoSensor")) {
+                    userAction.add("userIntent", new JsonPrimitive("intentInfoSensor"));
+                } else if (entrada[0].trim().equals("requestayuda")) {
+                    userAction.add("userIntent", new JsonPrimitive("intentayuda"));
                 } else {
                     userAction.add("userIntent", new JsonPrimitive("intenterror"));
                 }
                 if (entrada.length > 1) {
-                    if (entrada[1].equals("Producto")) {
-                        context.add("Producto", new JsonPrimitive(userUtterance));
+                    if (entrada[1].equals("AllSensors")) {
+                        context.add("AllSensors", new JsonPrimitive(userUtterance));
                         if (entrada.length > 2) {
-                            this.cProducto = new Productor();
+                            this.cAllSensors = new AllSensors();
                             String[] data = entrada[2].split("--");
-                            this.cProducto.settipo(data[0].split("-")[1]);
-                            this.cProducto.setprecio(data[1].split("-")[1]);
+                            this.cAllSensors.setid(data[0].split("-")[1]);
+                            this.cAllSensors.setestado(data[1].split("-")[1]);
+                            this.cAllSensors.settemperatura(data[2].split("-")[1]);
                         }
                     }
-                    if (entrada[1].equals("Ingredientes")) {
-                        context.add("Ingredientes", new JsonPrimitive(userUtterance));
-                        this.cIngredientes.clear();
-                        String[] data = userUtterance.split(",");
-                        for (int i = 0; i < data.length; i++) {
-                            String[] data1 = data[i].split("--");
-                            Ingredientes obj = new Ingredientes();
-                            obj.setingredientes(data1[0].split("-")[1]);
-                            obj.setprecio(data1[1].split("-")[1]);
-                            this.cIngredientes.add(obj);
+                    if (entrada[1].equals("IDSensor")) {
+                        context.add("IDSensor", new JsonPrimitive(userUtterance));
+                        if (entrada.length > 2) {
+                            this.cIDSensor = new IDSensor();
+                            String[] data = entrada[2].split("--");
+                            this.cIDSensor.setid(data[0].split("-")[1]);
+                            this.cIDSensor.setestado(data[1].split("-")[1]);
+                            this.cIDSensor.settemperatura(data[2].split("-")[1]);
                         }
                     }
-                    if (entrada[1].equals("Tiendas")) {
-                        context.add("Tiendas", new JsonPrimitive(userUtterance));
+                    if (entrada[1].equals("InfoSensor")) {
+                        context.add("InfoSensor", new JsonPrimitive(userUtterance));
                         if (entrada.length > 2) {
-                            this.cTiendas = new Tiendas();
+                            this.cInfoSensor = new InfoSensor();
                             String[] data = entrada[2].split("--");
-                            this.cTiendas.setid(data[0].split("-")[1]);
-                            this.cTiendas.setnombre(data[1].split("-")[1]);
-                            this.cTiendas.setdireccion(data[2].split("-")[1]);
-                            this.cTiendas.seturl(data[3].split("-")[1]);
-                            this.cTiendas.settelefono(data[4].split("-")[1]);
+                            this.cInfoSensor.setid(data[0].split("-")[1]);
+                            this.cInfoSensor.setestado(data[1].split("-")[1]);
+                            this.cInfoSensor.settemperatura(data[2].split("-")[1]);
                         }
                     }
                 }
@@ -157,18 +155,22 @@ public class Chatbot {
 
         if (userIntent.equals("intenterror")) {
             context.add("currentTask", new JsonPrimitive("taskerror"));
-        } else if (userIntent.equals("intentResultados")) {
-            context.add("currentTask", new JsonPrimitive("taskResultados"));
         } else if (userIntent.equals("intenthola")) {
-            context.add("currentTask", new JsonPrimitive("taskProducto"));
-        } else if (userIntent.equals("intentProducto")) {
-            context.add("currentTask", new JsonPrimitive("taskProducto"));
-        } else if (userIntent.equals("intentIngredientes")) {
-            context.add("currentTask", new JsonPrimitive("taskIngredientes"));
-        } else if (userIntent.equals("intentTiendas")) {
-            context.add("currentTask", new JsonPrimitive("taskTiendas"));
-        } else if (userIntent.equals("intentfinalizar")) {
-            context.add("currentTask", new JsonPrimitive("taskfinalizar"));
+            context.add("currentTask", new JsonPrimitive("taskSaludo"));
+        } else if (userIntent.equals("intentopciones")) {
+            context.add("currentTask", new JsonPrimitive("taskMenuOpciones"));
+        } else if (userIntent.equals("intentSaludo")) {
+            context.add("currentTask", new JsonPrimitive("taskSaludo"));
+        } else if (userIntent.equals("intentMenuOpciones")) {
+            context.add("currentTask", new JsonPrimitive("taskMenuOpciones"));
+        } else if (userIntent.equals("intentAllSensors")) {
+            context.add("currentTask", new JsonPrimitive("taskAllSensors"));
+        } else if (userIntent.equals("intentIDSensor")) {
+            context.add("currentTask", new JsonPrimitive("taskIDSensor"));
+        } else if (userIntent.equals("intentInfoSensor")) {
+            context.add("currentTask", new JsonPrimitive("taskInfoSensor"));
+        } else if (userIntent.equals("intentayuda")) {
+            context.add("currentTask", new JsonPrimitive("taskayuda"));
         }
     }
 
@@ -176,18 +178,22 @@ public class Chatbot {
         String currentTask = context.get("currentTask").getAsString();
         if (currentTask.equals("taskerror")) {
             context.add("botIntent", new JsonPrimitive("boterror"));
-        } else if (currentTask.equals("taskResultados")) {
-            context.add("botIntent", new JsonPrimitive("botResultados"));
         } else if (currentTask.equals("taskhola")) {
             context.add("botIntent", new JsonPrimitive("bothola"));
-        } else if (currentTask.equals("taskProducto")) {
-            context.add("botIntent", new JsonPrimitive("botProducto"));
-        } else if (currentTask.equals("taskIngredientes")) {
-            context.add("botIntent", new JsonPrimitive("botIngredientes"));
-        } else if (currentTask.equals("taskTiendas")) {
-            context.add("botIntent", new JsonPrimitive("botTiendas"));
-        } else if (currentTask.equals("taskfinalizar")) {
-            context.add("botIntent", new JsonPrimitive("botfinalizar"));
+        } else if (currentTask.equals("taskopciones")) {
+            context.add("botIntent", new JsonPrimitive("botopciones"));
+        } else if (currentTask.equals("taskSaludo")) {
+            context.add("botIntent", new JsonPrimitive("botSaludo"));
+        } else if (currentTask.equals("taskMenuOpciones")) {
+            context.add("botIntent", new JsonPrimitive("botMenuOpciones"));
+        } else if (currentTask.equals("taskAllSensors")) {
+            context.add("botIntent", new JsonPrimitive("botAllSensors"));
+        } else if (currentTask.equals("taskIDSensor")) {
+            context.add("botIntent", new JsonPrimitive("botIDSensor"));
+        } else if (currentTask.equals("taskInfoSensor")) {
+            context.add("botIntent", new JsonPrimitive("botInfoSensor"));
+        } else if (currentTask.equals("taskayuda")) {
+            context.add("botIntent", new JsonPrimitive("botayuda"));
         }
     }
 
@@ -200,119 +206,117 @@ public class Chatbot {
         String type = "";
 
         if (botIntent.equals("boterror")) {
-            botUtterance = "error! ";
+            botUtterance = "lo siento no pude entender :( ";
             type = "error";
             JsonObject b = null;
             out.add("buttons", buttons);
         } else if (botIntent.equals("bothola")) {
-            botUtterance = "hola que deseas en este instante? ";
-            type = "Producto";
+            botUtterance = "hola! en que puedo ayudarte? ";
+            type = "Saludo";
             JsonObject b = null;
             out.add("buttons", buttons);
-        } else if (botIntent.equals("botProducto")) {
-            type = "Producto";
-            botUtterance = "hola que deseas en este instante?";
+        } else if (botIntent.equals("botopciones")) {
+            botUtterance = "sus opciones ";
+            type = "MenuOpciones";
+            JsonObject b = null;
+            b = new JsonObject();
+            b.add("titulo", new JsonPrimitive("estado de los sensores"));
+            b.add("respuesta", new JsonPrimitive("requestAllSensors"));
+            buttons.add(b);
+            b = new JsonObject();
+            b.add("titulo", new JsonPrimitive("estado de un sensor"));
+            b.add("respuesta", new JsonPrimitive("requestIDSensor"));
+            buttons.add(b);
+            b = new JsonObject();
+            b.add("titulo", new JsonPrimitive("ayuda"));
+            b.add("respuesta", new JsonPrimitive("requestayuda"));
+            buttons.add(b);
+            out.add("buttons", buttons);
+        } else if (botIntent.equals("botSaludo")) {
+            type = "Saludo";
+            botUtterance = "hola! en que puedo ayudarte?";
+            JsonObject b = null;
+        } else if (botIntent.equals("botMenuOpciones")) {
+            type = "MenuOpciones";
+            botUtterance = "sus opciones";
+            JsonObject b = null;
+            b = new JsonObject();
+            b.add("titulo", new JsonPrimitive("estado de los sensores"));
+            b.add("respuesta", new JsonPrimitive("requestAllSensors"));
+            buttons.add(b);
+            b = new JsonObject();
+            b.add("titulo", new JsonPrimitive("estado de un sensor"));
+            b.add("respuesta", new JsonPrimitive("requestIDSensor"));
+            buttons.add(b);
+            b = new JsonObject();
+            b.add("titulo", new JsonPrimitive("ayuda"));
+            b.add("respuesta", new JsonPrimitive("requestayuda"));
+            buttons.add(b);
+        } else if (botIntent.equals("botAllSensors")) {
+            type = "AllSensors";
+            botUtterance = "Sensores";
             JsonObject b = null;
             JsonArray b1 = null;
             JsonArray elements = new JsonArray();
             JsonObject e = null;
             JsonObject obj = null;
-            JsonObject servicio = service.getProducto();
-            JsonArray elementosServicio = (JsonArray) servicio.get("product").getAsJsonArray();
+            JsonObject servicio = service.getAllSensors();
+            JsonArray elementosServicio = (JsonArray) servicio.get("sensores").getAsJsonArray();
 
             for (int i = 0; i < elementosServicio.size(); i++) {
                 e = new JsonObject();
                 obj = elementosServicio.get(i).getAsJsonObject();
-                e.add("titulo", new JsonPrimitive("" + "" + obj.get("tipo").getAsString()));
-                b = new JsonObject();
-                b1 = new JsonArray();
-                b.add("titulo", new JsonPrimitive(obj.get("tipo").getAsString()));
-                String var = "" + "tipo-" + obj.get("tipo").getAsString() + "--" + "precio-" + obj.get("precio").getAsString();
-                b.add("respuesta", new JsonPrimitive("requestIngredientes:Producto:" + var));
-                b1.add(b);
-                e.add("buttons", b1);
+                e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString() + " \n estado:" + obj.get("estado").getAsString() + "\n temperatura" + obj.get("temperatura").getAsString()));
                 elements.add(e);
             }
             out.add("elements", elements);
-        } else if (botIntent.equals("botIngredientes")) {
-            type = "Ingredientes";
-            botUtterance = "seleccione Ingredientes";
+        } else if (botIntent.equals("botIDSensor")) {
+            type = "IDSensor";
+            botUtterance = "escoja sensor";
             JsonObject b = null;
             JsonArray b1 = null;
             JsonArray elements = new JsonArray();
             JsonObject e = null;
             JsonObject obj = null;
-            JsonObject servicio = service.getIngredientes(this.cProducto.gettipo());
-            JsonArray elementosServicio = (JsonArray) servicio.get("product").getAsJsonArray();
+            JsonObject servicio = service.getIDSensor();
+            JsonArray elementosServicio = (JsonArray) servicio.get("sensores").getAsJsonArray();
 
             for (int i = 0; i < elementosServicio.size(); i++) {
                 e = new JsonObject();
                 obj = elementosServicio.get(i).getAsJsonObject();
-                e.add("titulo", new JsonPrimitive("" + "" + obj.get("ingredientes").getAsString()));
+                e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString()));
                 b = new JsonObject();
                 b1 = new JsonArray();
-                b.add("titulo", new JsonPrimitive(obj.get("ingredientes").getAsString()));
-                String var = "" + "ingredientes-" + obj.get("ingredientes").getAsString() + "--" + "precio-" + obj.get("precio").getAsString();
-                b.add("respuesta", new JsonPrimitive("add Ingredientes:" + var));
+                b.add("titulo", new JsonPrimitive(obj.get("Seleccionar").getAsString()));
+                String var = "" + "id-" + obj.get("id").getAsString() + "--" + "estado-" + obj.get("estado").getAsString() + "--" + "temperatura-" + obj.get("temperatura").getAsString();
+                b.add("respuesta", new JsonPrimitive("requestInfoSensor:IDSensor:" + var));
                 b1.add(b);
                 e.add("buttons", b1);
                 elements.add(e);
             }
-            b = new JsonObject();
-            b.add("titulo", new JsonPrimitive("enviar"));
-            b.add("respuesta", new JsonPrimitive("requestTiendas:Ingredientes"));
-            buttons.add(b);
             out.add("elements", elements);
-        } else if (botIntent.equals("botTiendas")) {
-            type = "Tiendas";
-            botUtterance = "estas son las tiendas que ofrecen el producto que deseas";
+        } else if (botIntent.equals("botInfoSensor")) {
+            type = "InfoSensor";
+            botUtterance = "";
             JsonObject b = null;
             JsonArray b1 = null;
             JsonArray elements = new JsonArray();
             JsonObject e = null;
             JsonObject obj = null;
-            JsonObject servicio = service.getTiendas(this.cProducto.gettipo(), getIngredientesingredientes());
-            JsonArray elementosServicio = (JsonArray) servicio.get("tienda").getAsJsonArray();
+            JsonObject servicio = service.getInfoSensor(cIDSensor.getid());
+            JsonArray elementosServicio = (JsonArray) servicio.get("sensores").getAsJsonArray();
 
             for (int i = 0; i < elementosServicio.size(); i++) {
                 e = new JsonObject();
                 obj = elementosServicio.get(i).getAsJsonObject();
-                e.add("titulo", new JsonPrimitive("" + "" + obj.get("nombre").getAsString()));
-                b = new JsonObject();
-                b1 = new JsonArray();
-                b.add("titulo", new JsonPrimitive(obj.get("nombre").getAsString()));
-                String var = "" + "id-" + obj.get("id").getAsString() + "--" + "nombre-" + obj.get("nombre").getAsString() + "--" + "direccion-" + obj.get("direccion").getAsString() + "--" + "url-" + " " + "--" + "telefono-" + obj.get("telefono").getAsString();
-                b.add("respuesta", new JsonPrimitive("requestResultados:Tiendas:" + var));
-                b1.add(b);
-                e.add("buttons", b1);
+                e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString() + " \n estado:" + obj.get("estado").getAsString() + "\n temperatura" + obj.get("temperatura").getAsString()));
                 elements.add(e);
             }
             out.add("elements", elements);
-        } else if (botIntent.equals("botfinalizar")) {
-            type = "finalizar";
-            botUtterance = "tu pedido a sido procesado";
+        } else if (botIntent.equals("botayuda")) {
+            type = "ayuda";
+            botUtterance = "bye ";
             JsonObject b = null;
-        } else if (botIntent.equals("botResultados")) {
-            type = "Resultados";
-            botUtterance = "desea confirmar pedido?";
-            JsonObject b = null;
-            JsonObject OInformeProducto = new JsonObject();
-            OInformeProducto.add("text", new JsonPrimitive("" + "el producto es: " + this.cProducto.gettipo()));
-            out.add("InformeProducto", OInformeProducto);
-            JsonObject OInformeIngredientes = new JsonObject();
-            OInformeIngredientes.add("text", new JsonPrimitive("" + "ingredientes: " + getIngredientesingredientes()));
-            out.add("InformeIngredientes", OInformeIngredientes);
-            JsonObject OInformeTienda = new JsonObject();
-            OInformeTienda.add("text", new JsonPrimitive("" + "Tienda: " + this.cTiendas.getnombre()));
-            out.add("InformeTienda", OInformeTienda);
-            b = new JsonObject();
-            b.add("titulo", new JsonPrimitive("Si"));
-            b.add("respuesta", new JsonPrimitive("requestfinalizar"));
-            buttons.add(b);
-            b = new JsonObject();
-            b.add("titulo", new JsonPrimitive("No"));
-            b.add("respuesta", new JsonPrimitive("requestProducto"));
-            buttons.add(b);
         }
         out.add("buttons", buttons);
         out.add("botIntent", context.get("botIntent"));
@@ -321,27 +325,5 @@ public class Chatbot {
         System.out.println("context: " + context.toString());
         System.out.println("salida: " + out.toString());
         return out;
-    }
-
-    public String getIngredientesingredientes() {
-        String res = "";
-        for (int i = 0; i < this.cIngredientes.size(); i++) {
-            if (i != 0) {
-                res += ",";
-            }
-            res += this.cIngredientes.get(i).getingredientes();
-        }
-        return res;
-    }
-
-    public String getIngredientesprecio() {
-        String res = "";
-        for (int i = 0; i < this.cIngredientes.size(); i++) {
-            if (i != 0) {
-                res += ",";
-            }
-            res += this.cIngredientes.get(i).getprecio();
-        }
-        return res;
     }
 }
