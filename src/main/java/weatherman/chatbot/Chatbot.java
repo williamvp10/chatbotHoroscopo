@@ -260,17 +260,19 @@ public class Chatbot {
             JsonArray elements = new JsonArray();
             JsonObject e = null;
             JsonObject obj = null;
+            System.out.println("entro");
             JsonObject servicio = service.getAllSensors();
+            System.out.println("salio");
             System.out.println(servicio.getAsString());
-//            JsonArray elementosServicio = (JsonArray) servicio.get("sensores").getAsJsonArray();
+            JsonArray elementosServicio = (JsonArray) servicio.get("sensores").getAsJsonArray();
 
-//            for (int i = 0; i < elementosServicio.size(); i++) {
-//                e = new JsonObject();
-//                obj = elementosServicio.get(i).getAsJsonObject();
-//                System.out.println("obj:"+obj.getAsString());
-//                e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString() + " \n estado:" + obj.get("estado").getAsString() + "\n temperatura" + obj.get("temperatura").getAsString()));
-//                elements.add(e);
-//            }
+            for (int i = 0; i < elementosServicio.size(); i++) {
+                e = new JsonObject();
+                obj = elementosServicio.get(i).getAsJsonObject();
+                System.out.println("obj:"+obj.getAsString());
+                e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString() + " \n estado:" + obj.get("estado").getAsString() + "\n temperatura" + obj.get("temperatura").getAsString()));
+                elements.add(e);
+            }
             out.add("elements", elements);
         } else if (botIntent.equals("botIDSensor")) {
             type = "IDSensor";
