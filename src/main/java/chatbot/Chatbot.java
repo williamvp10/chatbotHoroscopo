@@ -1,4 +1,4 @@
-package weatherman.chatbot;
+package chatbot;
 
 import Services.Service1;
 import com.google.gson.Gson;
@@ -10,6 +10,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonParser;
 import java.util.ArrayList;
+import chatbot.AllSensors;
+import chatbot.IDSensor;
+import chatbot.InfoSensor;
 
 public class Chatbot {
 
@@ -19,6 +22,8 @@ public class Chatbot {
     AllSensors cAllSensors;
     IDSensor cIDSensor;
     InfoSensor cInfoSensor;
+    EstadoActuador cEstadoActuador;
+    ModificarActuador cModificarActuador;
 
     public static void main(String[] args) throws IOException {
         Chatbot c = new Chatbot();
@@ -49,6 +54,8 @@ public class Chatbot {
         this.cAllSensors = new AllSensors();
         this.cIDSensor = new IDSensor();
         this.cInfoSensor = new InfoSensor();
+        this.cEstadoActuador = new EstadoActuador();
+        this.cModificarActuador = new ModificarActuador();
     }
 
     public JsonObject process(JsonObject userInput) throws IOException {
@@ -108,6 +115,10 @@ public class Chatbot {
                     userAction.add("userIntent", new JsonPrimitive("intentInfoSensor"));
                 } else if (entrada[0].trim().equals("requestayuda")) {
                     userAction.add("userIntent", new JsonPrimitive("intentayuda"));
+                } else if (entrada[0].trim().equals("requestEstadoActuador")) {
+                    userAction.add("userIntent", new JsonPrimitive("intentEstadoActuador"));
+                } else if (entrada[0].trim().equals("requestModificarActuador")) {
+                    userAction.add("userIntent", new JsonPrimitive("intentModificarActuador"));
                 } else {
                     userAction.add("userIntent", new JsonPrimitive("intenterror"));
                 }
@@ -129,7 +140,6 @@ public class Chatbot {
                             this.cIDSensor.setestado(data[1].split("-")[1]);
                             this.cIDSensor.settemperatura(data[2].split("-")[1]);
                         }
-                        System.out.println("entroo: " + this.cIDSensor.getid());
                     }
                     if (entrada[1].equals("InfoSensor")) {
                         if (entrada.length > 2) {
@@ -138,6 +148,25 @@ public class Chatbot {
                             this.cInfoSensor.setid(data[0].split("-")[1]);
                             this.cInfoSensor.setestado(data[1].split("-")[1]);
                             this.cInfoSensor.settemperatura(data[2].split("-")[1]);
+                        }
+                    } else if (entrada[1].equals("EstadoActuador")) {
+                        if (entrada.length > 2) {
+                            this.cEstadoActuador = new EstadoActuador();
+                            String[] data = entrada[2].split("--");
+                            this.cEstadoActuador.setid(data[0].split("-")[1]);
+                            this.cEstadoActuador.setestado(data[1].split("-")[1]);
+                            this.cEstadoActuador.setvalor(data[2].split("-")[1]);
+                            this.cEstadoActuador.seturl(data[3].split("-")[1]);
+                        }
+                    }
+                    if (entrada[1].equals("ModificarActuador")) {
+                        if (entrada.length > 2) {
+                            this.cModificarActuador = new ModificarActuador();
+                            String[] data = entrada[2].split("--");
+                            this.cModificarActuador.setid(data[0].split("-")[1]);
+                            this.cModificarActuador.setestado(data[1].split("-")[1]);
+                            this.cModificarActuador.setvalor(data[2].split("-")[1]);
+                            this.cModificarActuador.seturl(data[3].split("-")[1]);
                         }
                     }
                 }
@@ -169,6 +198,10 @@ public class Chatbot {
             context.add("currentTask", new JsonPrimitive("taskInfoSensor"));
         } else if (userIntent.equals("intentayuda")) {
             context.add("currentTask", new JsonPrimitive("taskayuda"));
+        } else if (userIntent.equals("intentEstadoActuador")) {
+            context.add("currentTask", new JsonPrimitive("taskEstadoActuador"));
+        } else if (userIntent.equals("intentModificarActuador")) {
+            context.add("currentTask", new JsonPrimitive("taskModificarActuador"));
         }
     }
 
@@ -192,6 +225,10 @@ public class Chatbot {
             context.add("botIntent", new JsonPrimitive("botInfoSensor"));
         } else if (currentTask.equals("taskayuda")) {
             context.add("botIntent", new JsonPrimitive("botayuda"));
+        } else if (currentTask.equals("taskEstadoActuador")) {
+            context.add("botIntent", new JsonPrimitive("botEstadoActuador"));
+        } else if (currentTask.equals("taskModificarActuador")) {
+            context.add("botIntent", new JsonPrimitive("botModificarActuador"));
         }
     }
 
@@ -312,6 +349,40 @@ public class Chatbot {
             System.out.println("servi: " + servicio);
             e = new JsonObject();
             e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString() + "  estado:" + obj.get("estado").getAsString() + " temperatura:" + obj.get("temperatura").getAsString()));
+            e.add("buttons", new JsonArray());
+            elements.add(e);
+            out.add("elements", elements);
+        } else if (botIntent.equals("botEstadoActuador")) {
+            type = "EstadoActuador";
+            botUtterance = "estadoactuador";
+            JsonObject b = null;
+            JsonArray b1 = null;
+            JsonArray elements = new JsonArray();
+            JsonObject e = null;
+            JsonObject obj = null;
+            JsonObject servicio = service.getEstadoActuador();
+            obj = (JsonObject) servicio.get("actuador").getAsJsonObject();
+            e = new JsonObject();
+            e.add("titulo", new JsonPrimitive("" + "valor: " + obj.get("valor").getAsString()));
+            e.add("subtitulo", new JsonPrimitive("" + "valor: " + obj.get("valor").getAsString()));
+            e.add("url", new JsonPrimitive(obj.get("url").getAsString()));
+            e.add("buttons", new JsonArray());
+            elements.add(e);
+            out.add("elements", elements);
+        } else if (botIntent.equals("botModificarActuador")) {
+            type = "ModificarActuador";
+            botUtterance = "";
+            JsonObject b = null;
+            JsonArray b1 = null;
+            JsonArray elements = new JsonArray();
+            JsonObject e = null;
+            JsonObject obj = null;
+            JsonObject servicio = service.getModificarActuador();
+            obj = (JsonObject) servicio.get("actuador").getAsJsonObject();
+            e = new JsonObject();
+            e.add("titulo", new JsonPrimitive("" + "valor: " + obj.get("valor").getAsString()));
+            e.add("subtitulo", new JsonPrimitive("" + "valor: " + obj.get("valor").getAsString()));
+            e.add("url", new JsonPrimitive(obj.get("url").getAsString()));
             e.add("buttons", new JsonArray());
             elements.add(e);
             out.add("elements", elements);

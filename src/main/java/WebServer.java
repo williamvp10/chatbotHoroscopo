@@ -5,7 +5,7 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 import spark.Spark;
-import weatherman.chatbot.Chatbot;
+import chatbot.Chatbot;
 import weatherman.web.utils.ResponseError;
 import static weatherman.web.utils.JSONUtil.*;
 
