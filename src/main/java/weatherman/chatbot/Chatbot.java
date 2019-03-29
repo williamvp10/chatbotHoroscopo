@@ -129,6 +129,7 @@ public class Chatbot {
                             this.cIDSensor.setestado(data[1].split("-")[1]);
                             this.cIDSensor.settemperatura(data[2].split("-")[1]);
                         }
+                        System.out.println("entroo: " + this.cIDSensor.getid());
                     }
                     if (entrada[1].equals("InfoSensor")) {
                         if (entrada.length > 2) {
@@ -263,12 +264,12 @@ public class Chatbot {
             for (int i = 0; i < elementosServicio.size(); i++) {
                 e = new JsonObject();
                 obj = elementosServicio.get(i).getAsJsonObject();
-                System.out.println("obj:"+obj);
-                System.out.println(" "+obj.get("id").getAsString());
+                System.out.println("obj:" + obj);
+                System.out.println(" " + obj.get("id").getAsString());
                 e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString() + "  estado:" + obj.get("estado").getAsString() + " temperatura:" + obj.get("temperatura").getAsString()));
-                e.add("buttons",new JsonArray());
+                e.add("buttons", new JsonArray());
                 elements.add(e);
-                System.out.println(" elementos "+elements);
+                System.out.println(" elementos " + elements);
             }
             out.add("elements", elements);
         } else if (botIntent.equals("botIDSensor")) {
@@ -286,7 +287,7 @@ public class Chatbot {
             for (int i = 0; i < elementosServicio.size(); i++) {
                 e = new JsonObject();
                 obj = elementosServicio.get(i).getAsJsonObject();
-                System.out.println("obj:"+obj);
+                System.out.println("obj:" + obj);
                 e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString()));
                 b = new JsonObject();
                 b1 = new JsonArray();
@@ -308,11 +309,12 @@ public class Chatbot {
             JsonObject obj = null;
             JsonObject servicio = service.getInfoSensor(cIDSensor.getid());
             JsonArray elementosServicio = (JsonArray) servicio.get("sensores").getAsJsonArray();
-            System.out.println("servi: "+servicio);
+            System.out.println("servi: " + servicio);
             for (int i = 0; i < elementosServicio.size(); i++) {
                 e = new JsonObject();
                 obj = elementosServicio.get(i).getAsJsonObject();
                 e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString() + "  estado:" + obj.get("estado").getAsString() + " temperatura:" + obj.get("temperatura").getAsString()));
+                e.add("buttons", new JsonArray());
                 elements.add(e);
             }
             out.add("elements", elements);
