@@ -251,22 +251,28 @@ public class Chatbot {
             JsonObject b = null;
             out.add("buttons", buttons);
         } else if (botIntent.equals("botopciones")) {
-            botUtterance = "sus opciones ";
             type = "MenuOpciones";
-            JsonObject b = null;
-            b = new JsonObject();
+            botUtterance = "sus opciones";
+            JsonArray elements = new JsonArray();
+            JsonObject b = new JsonObject();
+            JsonObject e = new JsonObject();
             b.add("titulo", new JsonPrimitive("estado de los sensores"));
             b.add("respuesta", new JsonPrimitive("requestAllSensors"));
-            buttons.add(b);
+            e.add("buttons", new JsonArray());
+            elements.add(e);
             b = new JsonObject();
+            e = new JsonObject();
             b.add("titulo", new JsonPrimitive("estado de un sensor"));
             b.add("respuesta", new JsonPrimitive("requestIDSensor"));
-            buttons.add(b);
+            e.add("buttons", new JsonArray());
+            elements.add(e);
             b = new JsonObject();
+            e = new JsonObject();
             b.add("titulo", new JsonPrimitive("ayuda"));
             b.add("respuesta", new JsonPrimitive("requestayuda"));
-            buttons.add(b);
-            out.add("buttons", buttons);
+            e.add("buttons", new JsonArray());
+            elements.add(e);
+            out.add("elements", elements);
         } else if (botIntent.equals("botSaludo")) {
             type = "Saludo";
             botUtterance = "hola! en que puedo ayudarte?";
@@ -274,19 +280,26 @@ public class Chatbot {
         } else if (botIntent.equals("botMenuOpciones")) {
             type = "MenuOpciones";
             botUtterance = "sus opciones";
-            JsonObject b = null;
-            b = new JsonObject();
+            JsonArray elements = new JsonArray();
+            JsonObject b = new JsonObject();
+            JsonObject e = new JsonObject();
             b.add("titulo", new JsonPrimitive("estado de los sensores"));
             b.add("respuesta", new JsonPrimitive("requestAllSensors"));
-            buttons.add(b);
+            e.add("buttons", new JsonArray());
+            elements.add(e);
             b = new JsonObject();
+            e = new JsonObject();
             b.add("titulo", new JsonPrimitive("estado de un sensor"));
             b.add("respuesta", new JsonPrimitive("requestIDSensor"));
-            buttons.add(b);
+            e.add("buttons", new JsonArray());
+            elements.add(e);
             b = new JsonObject();
+            e = new JsonObject();
             b.add("titulo", new JsonPrimitive("ayuda"));
             b.add("respuesta", new JsonPrimitive("requestayuda"));
-            buttons.add(b);
+            e.add("buttons", new JsonArray());
+            elements.add(e);
+            out.add("elements", elements);
         } else if (botIntent.equals("botAllSensors")) {
             type = "AllSensors";
             botUtterance = "Sensores";
