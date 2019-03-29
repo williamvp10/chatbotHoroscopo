@@ -308,15 +308,12 @@ public class Chatbot {
             JsonObject e = null;
             JsonObject obj = null;
             JsonObject servicio = service.getInfoSensor(this.cIDSensor.getid());
-            JsonArray elementosServicio = (JsonArray) servicio.get("sensor").getAsJsonArray();
+            obj = (JsonObject) servicio.get("sensor").getAsJsonObject();
             System.out.println("servi: " + servicio);
-            for (int i = 0; i < elementosServicio.size(); i++) {
-                e = new JsonObject();
-                obj = elementosServicio.get(i).getAsJsonObject();
-                e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString() + "  estado:" + obj.get("estado").getAsString() + " temperatura:" + obj.get("temperatura").getAsString()));
-                e.add("buttons", new JsonArray());
-                elements.add(e);
-            }
+            e = new JsonObject();
+            e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString() + "  estado:" + obj.get("estado").getAsString() + " temperatura:" + obj.get("temperatura").getAsString()));
+            e.add("buttons", new JsonArray());
+            elements.add(e);
             out.add("elements", elements);
         } else if (botIntent.equals("botayuda")) {
             type = "ayuda";
