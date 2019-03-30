@@ -264,7 +264,7 @@ public class Chatbot {
             e.add("buttons", b1);
             elements.add(e);
             b = new JsonObject();
-            b1= new JsonArray();
+            b1 = new JsonArray();
             e = new JsonObject();
             b.add("titulo", new JsonPrimitive("seleccionar"));
             b.add("respuesta", new JsonPrimitive("requestIDSensor"));
@@ -273,7 +273,7 @@ public class Chatbot {
             e.add("buttons", b1);
             elements.add(e);
             b = new JsonObject();
-            b1= new JsonArray();
+            b1 = new JsonArray();
             e = new JsonObject();
             b.add("titulo", new JsonPrimitive("seleccionar"));
             b.add("respuesta", new JsonPrimitive("requestModificarActuador"));
@@ -282,7 +282,7 @@ public class Chatbot {
             e.add("buttons", b1);
             elements.add(e);
             b = new JsonObject();
-            b1= new JsonArray();
+            b1 = new JsonArray();
             e = new JsonObject();
             b.add("titulo", new JsonPrimitive("seleccionar"));
             b.add("respuesta", new JsonPrimitive("requestEstadoActuador"));
@@ -300,7 +300,7 @@ public class Chatbot {
             botUtterance = "sus opciones";
             JsonArray elements = new JsonArray();
             JsonObject b = new JsonObject();
-            JsonArray b1= new JsonArray();
+            JsonArray b1 = new JsonArray();
             JsonObject e = new JsonObject();
             b.add("titulo", new JsonPrimitive("seleccionar"));
             b.add("respuesta", new JsonPrimitive("requestAllSensors"));
@@ -309,7 +309,7 @@ public class Chatbot {
             e.add("buttons", b1);
             elements.add(e);
             b = new JsonObject();
-            b1= new JsonArray();
+            b1 = new JsonArray();
             e = new JsonObject();
             b.add("titulo", new JsonPrimitive("seleccionar"));
             b.add("respuesta", new JsonPrimitive("requestIDSensor"));
@@ -318,7 +318,7 @@ public class Chatbot {
             e.add("buttons", b1);
             elements.add(e);
             b = new JsonObject();
-            b1= new JsonArray();
+            b1 = new JsonArray();
             e = new JsonObject();
             b.add("titulo", new JsonPrimitive("seleccionar"));
             b.add("respuesta", new JsonPrimitive("requestModificarActuador"));
@@ -327,13 +327,13 @@ public class Chatbot {
             e.add("buttons", b1);
             elements.add(e);
             b = new JsonObject();
-            b1= new JsonArray();
+            b1 = new JsonArray();
             e = new JsonObject();
             b.add("titulo", new JsonPrimitive("seleccionar"));
             b.add("respuesta", new JsonPrimitive("requestEstadoActuador"));
             e.add("titulo", new JsonPrimitive("estado Actuador"));
             b1.add(b);
-            e.add("buttons",b1);
+            e.add("buttons", b1);
             elements.add(e);
             out.add("elements", elements);
         } else if (botIntent.equals("botAllSensors")) {
@@ -353,6 +353,8 @@ public class Chatbot {
                 System.out.println("obj:" + obj);
                 System.out.println(" " + obj.get("id").getAsString());
                 e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString() + "  estado:" + obj.get("estado").getAsString() + " temperatura:" + obj.get("temperatura").getAsString()));
+                e.add("subtitulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString()));
+                e.add("url", new JsonPrimitive(obj.get("url").getAsString()));
                 e.add("buttons", new JsonArray());
                 elements.add(e);
                 System.out.println(" elementos " + elements);
@@ -375,6 +377,8 @@ public class Chatbot {
                 obj = elementosServicio.get(i).getAsJsonObject();
                 System.out.println("obj:" + obj);
                 e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString()));
+                e.add("subtitulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString()));
+                e.add("url", new JsonPrimitive(obj.get("url").getAsString()));
                 b = new JsonObject();
                 b1 = new JsonArray();
                 b.add("titulo", new JsonPrimitive("Seleccionar"));
@@ -398,6 +402,8 @@ public class Chatbot {
             System.out.println("servi: " + servicio);
             e = new JsonObject();
             e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString() + "  estado:" + obj.get("estado").getAsString() + " temperatura:" + obj.get("temperatura").getAsString()));
+            e.add("subtitulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString()));
+            e.add("url", new JsonPrimitive(obj.get("url").getAsString()));
             e.add("buttons", new JsonArray());
             elements.add(e);
             out.add("elements", elements);
