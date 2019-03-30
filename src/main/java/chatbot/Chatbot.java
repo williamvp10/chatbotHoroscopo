@@ -432,8 +432,8 @@ public class Chatbot {
             elements.add(e);
             out.add("elements", elements);
         } else if (botIntent.equals("botModificarActuador")) {
-            type = "se a modificado el estado del actuador";
-            botUtterance = "";
+            type = "ModificarActuador";
+            botUtterance = "se a modificado el estado del actuador";
             JsonObject b = null;
             JsonArray b1 = null;
             JsonArray elements = new JsonArray();
