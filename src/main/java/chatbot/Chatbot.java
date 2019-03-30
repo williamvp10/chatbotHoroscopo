@@ -261,6 +261,7 @@ public class Chatbot {
             b.add("respuesta", new JsonPrimitive("requestAllSensors"));
             b1.add(b);
             e.add("titulo", new JsonPrimitive("estado de los sensores"));
+            e.add("subtitulo", new JsonPrimitive("opcion 1"));
             e.add("buttons", b1);
             elements.add(e);
             b = new JsonObject();
@@ -269,6 +270,7 @@ public class Chatbot {
             b.add("titulo", new JsonPrimitive("seleccionar"));
             b.add("respuesta", new JsonPrimitive("requestIDSensor"));
             e.add("titulo", new JsonPrimitive("estado de un sensor"));
+            e.add("subtitulo", new JsonPrimitive("opcion 2"));
             b1.add(b);
             e.add("buttons", b1);
             elements.add(e);
@@ -278,6 +280,7 @@ public class Chatbot {
             b.add("titulo", new JsonPrimitive("seleccionar"));
             b.add("respuesta", new JsonPrimitive("requestModificarActuador"));
             e.add("titulo", new JsonPrimitive("modificar Actuador"));
+            e.add("subtitulo", new JsonPrimitive("opcion 3"));
             b1.add(b);
             e.add("buttons", b1);
             elements.add(e);
@@ -286,7 +289,7 @@ public class Chatbot {
             e = new JsonObject();
             b.add("titulo", new JsonPrimitive("seleccionar"));
             b.add("respuesta", new JsonPrimitive("requestEstadoActuador"));
-            e.add("titulo", new JsonPrimitive("estado Actuador"));
+            e.add("subtitulo", new JsonPrimitive("opcion 4"));
             b1.add(b);
             e.add("buttons", b1);
             elements.add(e);
@@ -305,6 +308,7 @@ public class Chatbot {
             b.add("titulo", new JsonPrimitive("seleccionar"));
             b.add("respuesta", new JsonPrimitive("requestAllSensors"));
             e.add("titulo", new JsonPrimitive("estado de los sensores"));
+            e.add("subtitulo", new JsonPrimitive("opcion 1"));
             b1.add(b);
             e.add("buttons", b1);
             elements.add(e);
@@ -314,6 +318,7 @@ public class Chatbot {
             b.add("titulo", new JsonPrimitive("seleccionar"));
             b.add("respuesta", new JsonPrimitive("requestIDSensor"));
             e.add("titulo", new JsonPrimitive("estado de un sensor"));
+            e.add("subtitulo", new JsonPrimitive("opcion 2"));
             b1.add(b);
             e.add("buttons", b1);
             elements.add(e);
@@ -323,6 +328,7 @@ public class Chatbot {
             b.add("titulo", new JsonPrimitive("seleccionar"));
             b.add("respuesta", new JsonPrimitive("requestModificarActuador"));
             e.add("titulo", new JsonPrimitive("modificar Actuador"));
+            e.add("subtitulo", new JsonPrimitive("opcion 3"));
             b1.add(b);
             e.add("buttons", b1);
             elements.add(e);
@@ -332,6 +338,7 @@ public class Chatbot {
             b.add("titulo", new JsonPrimitive("seleccionar"));
             b.add("respuesta", new JsonPrimitive("requestEstadoActuador"));
             e.add("titulo", new JsonPrimitive("estado Actuador"));
+            e.add("subtitulo", new JsonPrimitive("opcion 4"));
             b1.add(b);
             e.add("buttons", b1);
             elements.add(e);
@@ -377,7 +384,7 @@ public class Chatbot {
                 obj = elementosServicio.get(i).getAsJsonObject();
                 System.out.println("obj:" + obj);
                 e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString()));
-                e.add("subtitulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString()));
+                e.add("subtitulo", new JsonPrimitive("id: " + obj.get("id").getAsString()));
                 e.add("url", new JsonPrimitive(obj.get("url").getAsString()));
                 b = new JsonObject();
                 b1 = new JsonArray();
