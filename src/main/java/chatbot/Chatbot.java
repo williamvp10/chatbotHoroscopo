@@ -345,7 +345,7 @@ public class Chatbot {
             out.add("elements", elements);
         } else if (botIntent.equals("botAllSensors")) {
             type = "AllSensors";
-            botUtterance = "Sensores";
+            botUtterance = "estado de los sensores";
             JsonObject b = null;
             JsonArray b1 = null;
             JsonArray elements = new JsonArray();
@@ -416,7 +416,7 @@ public class Chatbot {
             out.add("elements", elements);
         } else if (botIntent.equals("botEstadoActuador")) {
             type = "EstadoActuador";
-            botUtterance = "estadoactuador";
+            botUtterance = "estado actuador";
             JsonObject b = null;
             JsonArray b1 = null;
             JsonArray elements = new JsonArray();
@@ -432,7 +432,7 @@ public class Chatbot {
             elements.add(e);
             out.add("elements", elements);
         } else if (botIntent.equals("botModificarActuador")) {
-            type = "ModificarActuador";
+            type = "se a modificado el estado del actuador";
             botUtterance = "";
             JsonObject b = null;
             JsonArray b1 = null;
