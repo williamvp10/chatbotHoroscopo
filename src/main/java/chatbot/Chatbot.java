@@ -10,20 +10,14 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonParser;
 import java.util.ArrayList;
-import chatbot.AllSensors;
-import chatbot.IDSensor;
-import chatbot.InfoSensor;
 
 public class Chatbot {
 
     JsonObject context;
     Service1 service;
-
-    AllSensors cAllSensors;
-    IDSensor cIDSensor;
-    InfoSensor cInfoSensor;
-    EstadoActuador cEstadoActuador;
-    ModificarActuador cModificarActuador;
+    Sensors sensors;
+    Sensor sensor;
+    Actuador actuador;
 
     public static void main(String[] args) throws IOException {
         Chatbot c = new Chatbot();
@@ -51,11 +45,9 @@ public class Chatbot {
         context = new JsonObject();
         context.add("currentTask", new JsonPrimitive("none"));
         service = new Service1();
-        this.cAllSensors = new AllSensors();
-        this.cIDSensor = new IDSensor();
-        this.cInfoSensor = new InfoSensor();
-        this.cEstadoActuador = new EstadoActuador();
-        this.cModificarActuador = new ModificarActuador();
+        this.sensors = new Sensors();
+        this.sensor=null;
+        this.actuador=null;
     }
 
     public JsonObject process(JsonObject userInput) throws IOException {
@@ -123,50 +115,23 @@ public class Chatbot {
                     userAction.add("userIntent", new JsonPrimitive("intenterror"));
                 }
                 if (entrada.length > 1) {
-                    if (entrada[1].equals("AllSensors")) {
-                        if (entrada.length > 2) {
-                            this.cAllSensors = new AllSensors();
-                            String[] data = entrada[2].split("--");
-                            this.cAllSensors.setid(data[0].split("-")[1]);
-                            this.cAllSensors.setestado(data[1].split("-")[1]);
-                            this.cAllSensors.settemperatura(data[2].split("-")[1]);
-                        }
-                    }
+                    
                     if (entrada[1].equals("IDSensor")) {
                         if (entrada.length > 2) {
-                            this.cIDSensor = new IDSensor();
+                            this.sensor= new Sensor();
                             String[] data = entrada[2].split("--");
-                            this.cIDSensor.setid(data[0].split("-")[1]);
-                            this.cIDSensor.setestado(data[1].split("-")[1]);
-                            this.cIDSensor.settemperatura(data[2].split("-")[1]);
+                            this.sensor.setid(data[0].split("-")[1]);
+                            this.sensor.setestado(data[1].split("-")[1]);
+                            this.sensor.settemperatura(data[2].split("-")[1]);
                         }
-                    }
-                    if (entrada[1].equals("InfoSensor")) {
+                    } else if (entrada[1].equals("ModificarActuador")) {
                         if (entrada.length > 2) {
-                            this.cInfoSensor = new InfoSensor();
+                            this.actuador = new Actuador();
                             String[] data = entrada[2].split("--");
-                            this.cInfoSensor.setid(data[0].split("-")[1]);
-                            this.cInfoSensor.setestado(data[1].split("-")[1]);
-                            this.cInfoSensor.settemperatura(data[2].split("-")[1]);
-                        }
-                    } else if (entrada[1].equals("EstadoActuador")) {
-                        if (entrada.length > 2) {
-                            this.cEstadoActuador = new EstadoActuador();
-                            String[] data = entrada[2].split("--");
-                            this.cEstadoActuador.setid(data[0].split("-")[1]);
-                            this.cEstadoActuador.setestado(data[1].split("-")[1]);
-                            this.cEstadoActuador.setvalor(data[2].split("-")[1]);
-                            this.cEstadoActuador.seturl(data[3].split("-")[1]);
-                        }
-                    }
-                    if (entrada[1].equals("ModificarActuador")) {
-                        if (entrada.length > 2) {
-                            this.cModificarActuador = new ModificarActuador();
-                            String[] data = entrada[2].split("--");
-                            this.cModificarActuador.setid(data[0].split("-")[1]);
-                            this.cModificarActuador.setestado(data[1].split("-")[1]);
-                            this.cModificarActuador.setvalor(data[2].split("-")[1]);
-                            this.cModificarActuador.seturl(data[3].split("-")[1]);
+                            this.actuador.setid(data[0].split("-")[1]);
+                            this.actuador.setestado(data[1].split("-")[1]);
+                            this.actuador.setvalor(data[2].split("-")[1]);
+                            this.actuador.seturl(data[3].split("-")[1]);
                         }
                     }
                 }
@@ -404,7 +369,7 @@ public class Chatbot {
             JsonArray elements = new JsonArray();
             JsonObject e = null;
             JsonObject obj = null;
-            JsonObject servicio = service.getInfoSensor(this.cIDSensor.getid());
+            JsonObject servicio = service.getInfoSensor(this.sensor.getid());
             obj = (JsonObject) servicio.get("sensor").getAsJsonObject();
             System.out.println("servi: " + servicio);
             e = new JsonObject();
