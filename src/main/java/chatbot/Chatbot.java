@@ -17,7 +17,7 @@ public class Chatbot {
     Service1 service;
     Sensor sensor;
     Actuador actuador;
-
+    Sensors typeInfoSensor;
     public static void main(String[] args) throws IOException {
         Chatbot c = new Chatbot();
         Scanner scanner = new Scanner(System.in);
@@ -46,6 +46,7 @@ public class Chatbot {
         service = new Service1();
         this.sensor=null;
         this.actuador=null;
+        this.typeInfoSensor=null;
     }
 
     public JsonObject process(JsonObject userInput) throws IOException {
@@ -113,25 +114,11 @@ public class Chatbot {
                     userAction.add("userIntent", new JsonPrimitive("intenterror"));
                 }
                 if (entrada.length > 1) {
-                    
                     if (entrada[1].equals("IDSensor")) {
                         if (entrada.length > 2) {
-                            this.sensor= new Sensor();
-                            String[] data = entrada[2].split("--");
-                            this.sensor.setid(data[0].split("-")[1]);
-                            this.sensor.setestado(data[1].split("-")[1]);
-                            this.sensor.settemperatura(data[2].split("-")[1]);
+                            this.sensor= this.typeInfoSensor.find(entrada[2]);
                         }
-                    } else if (entrada[1].equals("ModificarActuador")) {
-                        if (entrada.length > 2) {
-                            this.actuador = new Actuador();
-                            String[] data = entrada[2].split("--");
-                            this.actuador.setid(data[0].split("-")[1]);
-                            this.actuador.setestado(data[1].split("-")[1]);
-                            this.actuador.setvalor(data[2].split("-")[1]);
-                            this.actuador.seturl(data[3].split("-")[1]);
-                        }
-                    }
+                    } 
                 }
             }
         }
@@ -342,6 +329,16 @@ public class Chatbot {
             JsonArray elementosServicio = (JsonArray) servicio.get("sensores").getAsJsonArray();
             System.out.println("salio");
             System.out.println(servicio);
+            this.typeInfoSensor=new Sensors();
+            for (int i = 0; i < elementosServicio.size(); i++) {
+                obj = elementosServicio.get(i).getAsJsonObject();
+                Sensor sensor = new Sensor();
+                sensor.setid(obj.get("id").getAsString());
+                sensor.setestado(obj.get("estado").getAsString());
+                sensor.settemperatura(obj.get("temperatura").getAsString());
+                sensor.seturl(obj.get("url").getAsString());
+                this.typeInfoSensor.add(sensor);
+            }
             for (int i = 0; i < elementosServicio.size(); i++) {
                 e = new JsonObject();
                 obj = elementosServicio.get(i).getAsJsonObject();
@@ -352,10 +349,8 @@ public class Chatbot {
                 b = new JsonObject();
                 b1 = new JsonArray();
                 b.add("titulo", new JsonPrimitive("Seleccionar"));
-                String var = "" + "id-" + obj.get("id").getAsString() + "--" + "estado-" + obj.get("estado").getAsString() + "--" + "temperatura-" + obj.get("temperatura").getAsString();
-                obj.remove("url");
-                System.out.println("obj:" + obj); 
-                b.add("respuesta", new JsonPrimitive("requestInfoSensor:IDSensor:" + obj));
+                String var = ""+obj.get("id").getAsString();
+                b.add("respuesta", new JsonPrimitive("requestInfoSensor:IDSensor:"+var));
                 b1.add(b);
                 e.add("buttons", b1);
                 elements.add(e);
