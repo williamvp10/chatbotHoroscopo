@@ -22,4 +22,17 @@ public class Sensors {
         this.sensor = sensor;
     }
     
+    public Sensor find(String id){
+        Sensor s=null;
+        for (int i = 0; i < this.sensor.size(); i++) {
+            if(id.equals(this.sensor.get(i).getid())){
+                s=this.sensor.get(i);
+            }
+        }
+        return s;
+    }
+    
+    public void add(Sensor s){
+        this.sensor.add(s);
+    }
 }
