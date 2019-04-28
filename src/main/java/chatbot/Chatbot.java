@@ -347,20 +347,17 @@ public class Chatbot {
         JsonArray elements = new JsonArray();
         JsonObject e = null;
         JsonObject servicio = service.getAllSensors();
-        JsonArray elementosServicio = (JsonArray) servicio.get("sensors").getAsJsonArray();
+        e = new JsonObject();
+        JsonObject obj = servicio.get("sensor").getAsJsonObject();
+        System.out.println("obj:" + obj);
+        System.out.println(" " + obj.get("id").getAsString());
+        e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString() + " temperatura: " + obj.get("temperatura").getAsString() + "  humedad: " + obj.get("humedad").getAsString() + " presion: " + obj.get("presion").getAsString()));
+        e.add("subtitulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString() + " temperatura: " + obj.get("temperatura").getAsString() + "  humedad: " + obj.get("humedad").getAsString() + " presion: " + obj.get("presion").getAsString()));
+        e.add("url", new JsonPrimitive("" + "https://www.pce-instruments.com/espanol/slot/4/artimg/large/pce-instruments-sensor-de-temperatura-pce-ir-57-5638928_957363.jpg"));
+        e.add("buttons", new JsonArray());
+        elements.add(e);
+        System.out.println(" elementos " + elements);
 
-        for (int i = 0; i < elementosServicio.size(); i++) {
-            e = new JsonObject();
-            JsonObject obj = elementosServicio.get(i).getAsJsonObject();
-            System.out.println("obj:" + obj);
-            System.out.println(" " + obj.get("id").getAsString());
-            e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString() + " temperatura: " + obj.get("temperatura").getAsString() + "  humedad: " + obj.get("humedad").getAsString() + " presion: " + obj.get("presion").getAsString()));
-            e.add("subtitulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString() + " temperatura: " + obj.get("temperatura").getAsString() + "  humedad: " + obj.get("humedad").getAsString() + " presion: " + obj.get("presion").getAsString()));
-            e.add("url", new JsonPrimitive("" + "https://www.pce-instruments.com/espanol/slot/4/artimg/large/pce-instruments-sensor-de-temperatura-pce-ir-57-5638928_957363.jpg"));
-            e.add("buttons", new JsonArray());
-            elements.add(e);
-            System.out.println(" elementos " + elements);
-        }
         out.add("elements", elements);
         out.add("buttons", buttons);
         out.add("elements", elements);
@@ -422,17 +419,15 @@ public class Chatbot {
         JsonArray elements = new JsonArray();
         JsonObject e = null;
         JsonObject servicio = service.getInfoSensor(this.sensor.getId());
-        JsonArray elementosServicio = (JsonArray) servicio.get("sensor").getAsJsonArray();
 
-        for (int i = 0; i < elementosServicio.size(); i++) {
-            e = new JsonObject();
-            JsonObject obj = elementosServicio.get(i).getAsJsonObject();
-            e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString() + " temperatura: " + obj.get("temperatura").getAsString() + "  humedad: " + obj.get("humedad").getAsString() + " presion: " + obj.get("presion").getAsString()));
-            e.add("subtitulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString() + " temperatura: " + obj.get("temperatura").getAsString() + "  humedad: " + obj.get("humedad").getAsString() + " presion: " + obj.get("presion").getAsString()));
-            e.add("url", new JsonPrimitive("" + "https://www.pce-instruments.com/espanol/slot/4/artimg/large/pce-instruments-sensor-de-temperatura-pce-ir-57-5638928_957363.jpg"));
-            e.add("buttons", new JsonArray());
-            elements.add(e);
-        }
+        e = new JsonObject();
+        JsonObject obj = servicio.get("sensor").getAsJsonObject();
+        e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString() + " temperatura: " + obj.get("temperatura").getAsString() + "  humedad: " + obj.get("humedad").getAsString() + " presion: " + obj.get("presion").getAsString()));
+        e.add("subtitulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString() + " temperatura: " + obj.get("temperatura").getAsString() + "  humedad: " + obj.get("humedad").getAsString() + " presion: " + obj.get("presion").getAsString()));
+        e.add("url", new JsonPrimitive("" + "https://www.pce-instruments.com/espanol/slot/4/artimg/large/pce-instruments-sensor-de-temperatura-pce-ir-57-5638928_957363.jpg"));
+        e.add("buttons", new JsonArray());
+        elements.add(e);
+
         out.add("buttons", buttons);
         out.add("elements", elements);
         return out;
