@@ -372,40 +372,35 @@ public class Chatbot {
         JsonArray elements = new JsonArray();
         JsonObject e = null;
         JsonObject servicio = service.getIdSensor();
-        JsonArray elementosServicio = (JsonArray) servicio.get("sensors").getAsJsonArray();
-        System.out.println("salio");
-        System.out.println(servicio);
+
         this.sensors = new Sensors();
-        for (int i = 0; i < elementosServicio.size(); i++) {
-            JsonObject obj = elementosServicio.get(i).getAsJsonObject();
-            Sensor sensor = new Sensor();
-            sensor.setId(obj.get("id").getAsString());
-            sensor.setHumedad(obj.get("humedad").getAsString());
-            sensor.setTemperatura(obj.get("temperatura").getAsString());
-            sensor.setPresion(obj.get("presion").getAsString());
-            sensor.setFecha(obj.get("fecha").getAsString());
-            sensor.setEjex(obj.get("ejex").getAsString());
-            sensor.setEjey(obj.get("ejey").getAsString());
-            sensor.setEjez(obj.get("ejez").getAsString());
-            this.sensors.add(sensor);
-        }
-        for (int i = 0; i < elementosServicio.size(); i++) {
-            e = new JsonObject();
-            JsonObject obj = elementosServicio.get(i).getAsJsonObject();
-            System.out.println("obj:" + obj);
-            e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString()));
-            e.add("subtitulo", new JsonPrimitive("id: " + obj.get("id").getAsString()));
-            e.add("url", new JsonPrimitive("" + "https://www.pce-instruments.com/espanol/slot/4/artimg/large/pce-instruments-sensor-de-temperatura-pce-ir-57-5638928_957363.jpg"));
-            b = new JsonObject();
-            b1 = new JsonArray();
-            b.add("titulo", new JsonPrimitive("Seleccionar"));
-            String var = "" + obj.get("id").getAsString();
-            b.add("respuesta", new JsonPrimitive("requestInfoSensor:IdSensor:" + var));
-            b1.add(b);
-            e.add("buttons", b1);
-            elements.add(e);
-            System.out.println("elements:" + elements);
-        }
+        JsonObject obj = servicio.get("sensor").getAsJsonObject();
+        Sensor sensor = new Sensor();
+        sensor.setId(obj.get("id").getAsString());
+        sensor.setHumedad(obj.get("humedad").getAsString());
+        sensor.setTemperatura(obj.get("temperatura").getAsString());
+        sensor.setPresion(obj.get("presion").getAsString());
+        sensor.setFecha(obj.get("fecha").getAsString());
+        sensor.setEjex(obj.get("ejex").getAsString());
+        sensor.setEjey(obj.get("ejey").getAsString());
+        sensor.setEjez(obj.get("ejez").getAsString());
+        this.sensors.add(sensor);
+
+        e = new JsonObject();
+        System.out.println("obj:" + obj);
+        e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString()));
+        e.add("subtitulo", new JsonPrimitive("id: " + obj.get("id").getAsString()));
+        e.add("url", new JsonPrimitive("" + "https://www.pce-instruments.com/espanol/slot/4/artimg/large/pce-instruments-sensor-de-temperatura-pce-ir-57-5638928_957363.jpg"));
+        b = new JsonObject();
+        b1 = new JsonArray();
+        b.add("titulo", new JsonPrimitive("Seleccionar"));
+        String var = "" + obj.get("id").getAsString();
+        b.add("respuesta", new JsonPrimitive("requestInfoSensor:IdSensor:" + var));
+        b1.add(b);
+        e.add("buttons", b1);
+        elements.add(e);
+        System.out.println("elements:" + elements);
+
         out.add("elements", elements);
         out.add("buttons", buttons);
         return out;
@@ -519,40 +514,34 @@ public class Chatbot {
         JsonArray elements = new JsonArray();
         JsonObject e = null;
         JsonObject servicio = service.getIdSensor();
-        JsonArray elementosServicio = (JsonArray) servicio.get("sensors").getAsJsonArray();
-        System.out.println("salio");
-        System.out.println(servicio);
         this.sensors = new Sensors();
-        for (int i = 0; i < elementosServicio.size(); i++) {
-            JsonObject obj = elementosServicio.get(i).getAsJsonObject();
-            Sensor sensor = new Sensor();
-            sensor.setId(obj.get("id").getAsString());
-            sensor.setHumedad(obj.get("humedad").getAsString());
-            sensor.setTemperatura(obj.get("temperatura").getAsString());
-            sensor.setPresion(obj.get("presion").getAsString());
-            sensor.setFecha(obj.get("fecha").getAsString());
-            sensor.setEjex(obj.get("ejex").getAsString());
-            sensor.setEjey(obj.get("ejey").getAsString());
-            sensor.setEjez(obj.get("ejez").getAsString());
-            this.sensors.add(sensor);
-        }
-        for (int i = 0; i < elementosServicio.size(); i++) {
-            e = new JsonObject();
-            JsonObject obj = elementosServicio.get(i).getAsJsonObject();
-            System.out.println("obj:" + obj);
-            e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString()));
-            e.add("subtitulo", new JsonPrimitive("id: " + obj.get("id").getAsString()));
-            e.add("url", new JsonPrimitive("" + "https://www.pce-instruments.com/espanol/slot/4/artimg/large/pce-instruments-sensor-de-temperatura-pce-ir-57-5638928_957363.jpg"));
-            b = new JsonObject();
-            b1 = new JsonArray();
-            b.add("titulo", new JsonPrimitive("Seleccionar"));
-            String var = "" + obj.get("id").getAsString();
-            b.add("respuesta", new JsonPrimitive("requestModificarSensor:IdSensor2:" + var));
-            b1.add(b);
-            e.add("buttons", b1);
-            elements.add(e);
-            System.out.println("elements:" + elements);
-        }
+        JsonObject obj = servicio.get("sensor").getAsJsonObject();
+
+        Sensor sensor = new Sensor();
+        sensor.setId(obj.get("id").getAsString());
+        sensor.setHumedad(obj.get("humedad").getAsString());
+        sensor.setTemperatura(obj.get("temperatura").getAsString());
+        sensor.setPresion(obj.get("presion").getAsString());
+        sensor.setFecha(obj.get("fecha").getAsString());
+        sensor.setEjex(obj.get("ejex").getAsString());
+        sensor.setEjey(obj.get("ejey").getAsString());
+        sensor.setEjez(obj.get("ejez").getAsString());
+        this.sensors.add(sensor);
+
+        System.out.println("obj:" + obj);
+        e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString()));
+        e.add("subtitulo", new JsonPrimitive("id: " + obj.get("id").getAsString()));
+        e.add("url", new JsonPrimitive("" + "https://www.pce-instruments.com/espanol/slot/4/artimg/large/pce-instruments-sensor-de-temperatura-pce-ir-57-5638928_957363.jpg"));
+        b = new JsonObject();
+        b1 = new JsonArray();
+        b.add("titulo", new JsonPrimitive("Seleccionar"));
+        String var = "" + obj.get("id").getAsString();
+        b.add("respuesta", new JsonPrimitive("requestModificarSensor:IdSensor2:" + var));
+        b1.add(b);
+        e.add("buttons", b1);
+        elements.add(e);
+        System.out.println("elements:" + elements);
+
         out.add("elements", elements);
         out.add("buttons", buttons);
         return out;
