@@ -128,9 +128,9 @@ public class Chatbot {
                     if (entrada[1].equals("IdSensor2")) {
                         if (entrada.length > 2) {
                             this.sensor = this.sensors.find(entrada[2]);
-                            this.sensor.setTemperatura(""+(Integer.parseInt(this.sensor.getTemperatura())+1));
-                            this.sensor.setHumedad(""+(Integer.parseInt(this.sensor.getHumedad())+1));
-                            this.sensor.setPresion(""+(Integer.parseInt(this.sensor.getPresion())+1));
+                            this.sensor.setTemperatura("" + (Integer.parseInt(this.sensor.getTemperatura()) + 1));
+                            this.sensor.setHumedad("" + (Integer.parseInt(this.sensor.getHumedad()) + 1));
+                            this.sensor.setPresion("" + (Integer.parseInt(this.sensor.getPresion()) + 1));
                         }
                     }
                 }
@@ -281,27 +281,58 @@ public class Chatbot {
     public JsonObject getbotMenuOpciones() {
         JsonObject out = new JsonObject();
         JsonArray buttons = new JsonArray();
-        JsonObject b = null;
-        b = new JsonObject();
-        b.add("titulo", new JsonPrimitive("estado sensores"));
+        JsonArray elements = new JsonArray();
+        JsonObject b = new JsonObject();
+        JsonArray b1 = new JsonArray();
+        JsonObject e = new JsonObject();
+        b.add("titulo", new JsonPrimitive("seleccionar"));
         b.add("respuesta", new JsonPrimitive("requestAllSensors"));
-        buttons.add(b);
+        b1.add(b);
+        e.add("titulo", new JsonPrimitive("estado de los sensores"));
+        e.add("subtitulo", new JsonPrimitive("opcion 1"));
+        e.add("buttons", b1);
+        elements.add(e);
         b = new JsonObject();
-        b.add("titulo", new JsonPrimitive("estado unico sensor"));
-        b.add("respuesta", new JsonPrimitive("requestIdSensor"));
-        buttons.add(b);
+        b1 = new JsonArray();
+        e = new JsonObject();
+        b.add("titulo", new JsonPrimitive("seleccionar"));
+        b.add("respuesta", new JsonPrimitive("requestIDSensor"));
+        e.add("titulo", new JsonPrimitive("estado de un sensor"));
+        e.add("subtitulo", new JsonPrimitive("opcion 2"));
+        b1.add(b);
+        e.add("buttons", b1);
+        elements.add(e);
         b = new JsonObject();
+        b1 = new JsonArray();
+        e = new JsonObject();
+        b.add("titulo", new JsonPrimitive("seleccionar"));
+        b.add("respuesta", new JsonPrimitive("requestModificarActuador"));
+        e.add("titulo", new JsonPrimitive("modificar Actuador"));
+        e.add("subtitulo", new JsonPrimitive("opcion 3"));
+        b1.add(b);
+        e.add("buttons", b1);
+        elements.add(e);
+        b = new JsonObject();
+        b1 = new JsonArray();
+        e = new JsonObject();
+        b.add("titulo", new JsonPrimitive("seleccionar"));
+        b.add("respuesta", new JsonPrimitive("requestEstadoActuador"));
+        e.add("subtitulo", new JsonPrimitive("opcion 4"));
+        b1.add(b);
+        e.add("buttons", b1);
+        elements.add(e);
+        
+        b = new JsonObject();
+        b1 = new JsonArray();
+        e = new JsonObject();
         b.add("titulo", new JsonPrimitive("modificar sensor"));
         b.add("respuesta", new JsonPrimitive("requestIdSensor2"));
-        buttons.add(b);
-        b = new JsonObject();
-        b.add("titulo", new JsonPrimitive("estado actuador"));
-        b.add("respuesta", new JsonPrimitive("requestEstadoActuador"));
-        buttons.add(b);
-        b = new JsonObject();
-        b.add("titulo", new JsonPrimitive("modificar actuador"));
-        b.add("respuesta", new JsonPrimitive("requestModificarActuador"));
-        buttons.add(b);
+        e.add("subtitulo", new JsonPrimitive("opcion 5"));
+        b1.add(b);
+        e.add("buttons", b1);
+        elements.add(e);
+        
+        out.add("elements", elements);
         out.add("buttons", buttons);
         return out;
     }
@@ -316,6 +347,19 @@ public class Chatbot {
         JsonObject servicio = service.getAllSensors();
         JsonArray elementosServicio = (JsonArray) servicio.get("sensors").getAsJsonArray();
 
+        for (int i = 0; i < elementosServicio.size(); i++) {
+            e = new JsonObject();
+            JsonObject obj = elementosServicio.get(i).getAsJsonObject();
+            System.out.println("obj:" + obj);
+            System.out.println(" " + obj.get("id").getAsString());
+            e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString() + "  estado:" + obj.get("estado").getAsString() + " temperatura:" + obj.get("temperatura").getAsString()));
+            e.add("subtitulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString()));
+            e.add("url", new JsonPrimitive("" + "https://www.pce-instruments.com/espanol/slot/4/artimg/large/pce-instruments-sensor-de-temperatura-pce-ir-57-5638928_957363.jpg"));
+            e.add("buttons", new JsonArray());
+            elements.add(e);
+            System.out.println(" elementos " + elements);
+        }
+        out.add("elements", elements);
         out.add("buttons", buttons);
         out.add("elements", elements);
         return out;
