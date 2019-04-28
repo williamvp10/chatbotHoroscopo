@@ -167,6 +167,7 @@ public class Service1 {
         response.setEntity(params);
         //step 4: Process the result
         JsonObject json = null;
+        System.out.println("r"+response.toString());
         int statusCode = response.getStatusLine().getStatusCode();
         if (statusCode == 200) {
             String response_string = EntityUtils.toString(response.getEntity());
