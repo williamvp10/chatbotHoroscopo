@@ -354,7 +354,7 @@ public class Chatbot {
             JsonObject obj = elementosServicio.get(i).getAsJsonObject();
             System.out.println("obj:" + obj);
             System.out.println(" " + obj.get("id").getAsString());
-            e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString() + "  estado:" + obj.get("estado").getAsString() + " temperatura:" + obj.get("temperatura").getAsString()));
+            e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString() + " temperatura: " + obj.get("temperatura").getAsString() + "  humedad: " + obj.get("humedad").getAsString() + " presion: " + obj.get("presion").getAsString()));
             e.add("subtitulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString()));
             e.add("url", new JsonPrimitive("" + "https://www.pce-instruments.com/espanol/slot/4/artimg/large/pce-instruments-sensor-de-temperatura-pce-ir-57-5638928_957363.jpg"));
             e.add("buttons", new JsonArray());
