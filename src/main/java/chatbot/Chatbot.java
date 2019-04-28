@@ -296,7 +296,7 @@ public class Chatbot {
         b1 = new JsonArray();
         e = new JsonObject();
         b.add("titulo", new JsonPrimitive("seleccionar"));
-        b.add("respuesta", new JsonPrimitive("requestIDSensor"));
+        b.add("respuesta", new JsonPrimitive("requestIdSensor"));
         e.add("titulo", new JsonPrimitive("estado de un sensor"));
         e.add("subtitulo", new JsonPrimitive("opcion 2"));
         b1.add(b);
@@ -395,12 +395,12 @@ public class Chatbot {
             System.out.println("obj:" + obj);
             e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString()));
             e.add("subtitulo", new JsonPrimitive("id: " + obj.get("id").getAsString()));
-            e.add("url", new JsonPrimitive(obj.get("url").getAsString()));
+            e.add("url", new JsonPrimitive("" + "https://www.pce-instruments.com/espanol/slot/4/artimg/large/pce-instruments-sensor-de-temperatura-pce-ir-57-5638928_957363.jpg"));
             b = new JsonObject();
             b1 = new JsonArray();
             b.add("titulo", new JsonPrimitive("Seleccionar"));
             String var = "" + obj.get("id").getAsString();
-            b.add("respuesta", new JsonPrimitive("requestInfoSensor:IDSensor:" + var));
+            b.add("respuesta", new JsonPrimitive("requestInfoSensor:IdSensor:" + var));
             b1.add(b);
             e.add("buttons", b1);
             elements.add(e);
@@ -547,7 +547,7 @@ public class Chatbot {
             b1 = new JsonArray();
             b.add("titulo", new JsonPrimitive("Seleccionar"));
             String var = "" + obj.get("id").getAsString();
-            b.add("respuesta", new JsonPrimitive("requestModificarSensor:IDSensor2:" + var));
+            b.add("respuesta", new JsonPrimitive("requestModificarSensor:IdSensor2:" + var));
             b1.add(b);
             e.add("buttons", b1);
             elements.add(e);
