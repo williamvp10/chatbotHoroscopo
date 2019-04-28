@@ -15,6 +15,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 
 import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import static weatherman.web.utils.JSONUtil.json;
@@ -158,10 +159,16 @@ public class Service1 {
 
         //step 3: Create a HTTPPut object and execute the url
         HttpPut httpPut = new HttpPut(url);
-        JsonParser parser = new JsonParser();
-        String infoPedido = new Gson().toJson(sensor);
-        JsonObject json2 = (JsonObject) parser.parse(infoPedido);
-       
+
+        JsonObject json2 = new JsonObject();
+        json2.add("id", new JsonPrimitive(sensor.getId()));
+        json2.add("temperatura", new JsonPrimitive(sensor.getTemperatura()));
+        json2.add("humedad", new JsonPrimitive(sensor.getHumedad()));
+        json2.add("presion", new JsonPrimitive(sensor.getPresion()));
+        json2.add("fecha", new JsonPrimitive(sensor.getFecha()));
+        json2.add("ejex", new JsonPrimitive(sensor.getEjex()));
+        json2.add("ejey", new JsonPrimitive(sensor.getEjey()));
+        json2.add("ejez", new JsonPrimitive(sensor.getEjez()));
         StringEntity params = new StringEntity(json2.toString());
         httpPut.setEntity(params);
         HttpResponse response = httpclient.execute(httpPut);
