@@ -158,16 +158,16 @@ public class Service1 {
 
         //step 3: Create a HTTPPut object and execute the url
         HttpPut httpPut = new HttpPut(url);
-        HttpResponse response = httpclient.execute(httpPut);
         JsonParser parser = new JsonParser();
         String infoPedido = new Gson().toJson(sensor);
         JsonObject json2 = (JsonObject) parser.parse(infoPedido);
-        response.addHeader("content-type", "application/json");
+       
         StringEntity params = new StringEntity(json2.toString());
-        response.setEntity(params);
+        httpPut.setEntity(params);
+        HttpResponse response = httpclient.execute(httpPut);
+        response.addHeader("content-type", "application/json");
         //step 4: Process the result
         JsonObject json = null;
-        System.out.println("r"+response.toString());
         int statusCode = response.getStatusLine().getStatusCode();
         if (statusCode == 200) {
             String response_string = EntityUtils.toString(response.getEntity());
