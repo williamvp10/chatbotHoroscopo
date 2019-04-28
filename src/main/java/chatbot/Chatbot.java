@@ -369,7 +369,7 @@ public class Chatbot {
                 elements.add(e);
                 System.out.println(" elementos " + elements);
             }
-        } catch (Error err) {
+        } catch (Exception err) {
             e = new JsonObject();
             JsonObject obj = servicio.get("sensor").getAsJsonObject();
             System.out.println("obj:" + obj);
@@ -436,7 +436,7 @@ public class Chatbot {
                 elements.add(e);
                 System.out.println("elements:" + elements);
             }
-        } catch (Error err) {
+        } catch (Exception err) {
             this.sensors = new Sensors();
             JsonObject obj = servicio.get("sensor").getAsJsonObject();
             Sensor sensor = new Sensor();
@@ -605,7 +605,7 @@ public class Chatbot {
                 elements.add(e);
                 System.out.println("elements:" + elements);
             }
-        } catch (Error err) {
+        } catch (Exception err) {
             this.sensors = new Sensors();
             JsonObject obj = servicio.get("sensor").getAsJsonObject();
             Sensor sensor = new Sensor();
