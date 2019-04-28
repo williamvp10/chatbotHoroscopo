@@ -443,17 +443,13 @@ public class Chatbot {
         JsonArray elements = new JsonArray();
         JsonObject e = null;
         JsonObject servicio = service.getEstadoActuador();
-        JsonArray elementosServicio = (JsonArray) servicio.get("actuador").getAsJsonArray();
-
-        for (int i = 0; i < elementosServicio.size(); i++) {
-            e = new JsonObject();
-            JsonObject obj = elementosServicio.get(i).getAsJsonObject();
-            e.add("titulo", new JsonPrimitive("" + "valor: " + obj.get("valor").getAsString()));
-            e.add("subtitulo", new JsonPrimitive("" + "valor: " + obj.get("valor").getAsString()));
-            e.add("url", new JsonPrimitive("" + "" + obj.get("url").getAsString()));
-            e.add("buttons", new JsonArray());
-            elements.add(e);
-        }
+        JsonObject obj = (JsonObject) servicio.get("actuador").getAsJsonObject();
+        e = new JsonObject();
+        e.add("titulo", new JsonPrimitive("" + "valor: " + obj.get("valor").getAsString()));
+        e.add("subtitulo", new JsonPrimitive("" + "valor: " + obj.get("valor").getAsString()));
+        e.add("url", new JsonPrimitive(obj.get("url").getAsString()));
+        e.add("buttons", new JsonArray());
+        elements.add(e);
         out.add("buttons", buttons);
         out.add("elements", elements);
         return out;
@@ -467,17 +463,12 @@ public class Chatbot {
         JsonArray elements = new JsonArray();
         JsonObject e = null;
         JsonObject servicio = service.getModificarActuador();
-        JsonArray elementosServicio = (JsonArray) servicio.get("actuador").getAsJsonArray();
-
-        for (int i = 0; i < elementosServicio.size(); i++) {
-            e = new JsonObject();
-            JsonObject obj = elementosServicio.get(i).getAsJsonObject();
-            e.add("titulo", new JsonPrimitive("" + "valor: " + obj.get("valor").getAsString()));
-            e.add("subtitulo", new JsonPrimitive("" + "valor: " + obj.get("valor").getAsString()));
-            e.add("url", new JsonPrimitive("" + "" + obj.get("url").getAsString()));
-            e.add("buttons", new JsonArray());
-            elements.add(e);
-        }
+        JsonObject obj = servicio.get("actuador").getAsJsonObject();
+        e.add("titulo", new JsonPrimitive("" + "valor: " + obj.get("valor").getAsString()));
+        e.add("subtitulo", new JsonPrimitive("" + "valor: " + obj.get("valor").getAsString()));
+        e.add("url", new JsonPrimitive("" + "" + obj.get("url").getAsString()));
+        e.add("buttons", new JsonArray());
+        elements.add(e);
         out.add("buttons", buttons);
         out.add("elements", elements);
         return out;
