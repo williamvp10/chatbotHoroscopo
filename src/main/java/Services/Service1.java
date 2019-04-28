@@ -173,9 +173,7 @@ public class Service1 {
         StringEntity params = new StringEntity(json2.toString());
         httpPut.setEntity(params);
         System.out.println("put:" + httpPut);
-
         //step 4: Process the result
-        HttpResponse indexResponse = null;
         HttpResponse response = null;
         try {
             httpPut.setEntity(new StringEntity(json2.toString(),
@@ -183,7 +181,6 @@ public class Service1 {
             response = httpclient.execute(httpPut);
             int statusCode = response.getStatusLine().getStatusCode();
             System.out.println("status:"+statusCode);
-            
         } catch (IOException ioe) {
             System.out.println("error");
         }

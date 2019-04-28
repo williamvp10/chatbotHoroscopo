@@ -445,7 +445,7 @@ public class Chatbot {
         JsonObject servicio = service.getEstadoActuador();
         JsonObject obj = (JsonObject) servicio.get("actuador").getAsJsonObject();
         e = new JsonObject();
-        e.add("titulo", new JsonPrimitive("" + "valor: " + obj.get("valor").getAsString()));
+        e.add("titulo", new JsonPrimitive("" + " " + obj.get("estado").getAsString()));
         e.add("subtitulo", new JsonPrimitive("" + "valor: " + obj.get("valor").getAsString()));
         e.add("url", new JsonPrimitive(obj.get("url").getAsString()));
         e.add("buttons", new JsonArray());
@@ -461,16 +461,17 @@ public class Chatbot {
         JsonObject b = null;
         JsonArray b1 = null;
         JsonArray elements = new JsonArray();
-        JsonObject e = null;
+        JsonObject e =new JsonObject();
         JsonObject servicio = service.getModificarActuador();
         JsonObject obj = servicio.get("actuador").getAsJsonObject();
-        e.add("titulo", new JsonPrimitive("" + "valor: " + obj.get("valor").getAsString()));
+        e.add("titulo", new JsonPrimitive("" + " " + obj.get("estado").getAsString()));
         e.add("subtitulo", new JsonPrimitive("" + "valor: " + obj.get("valor").getAsString()));
         e.add("url", new JsonPrimitive("" + "" + obj.get("url").getAsString()));
         e.add("buttons", new JsonArray());
         elements.add(e);
         out.add("buttons", buttons);
         out.add("elements", elements);
+       
         return out;
     }
 
