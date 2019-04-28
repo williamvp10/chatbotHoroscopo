@@ -1,51 +1,100 @@
 package chatbot;
 
-public class Sensor {
+import com.google.gson.annotations.SerializedName;
 
+public class Sensor {
+    @SerializedName("id")    
     private String id;
-    private String estado;
+    @SerializedName("temperatura")
     private String temperatura;
-    private String url;
+    @SerializedName("humedad")
+    private String humedad;
+    @SerializedName("presion")
+    private String presion;
+    @SerializedName("fecha")
+    private String fecha;
+    @SerializedName("ejex")
+    private String ejex;
+    @SerializedName("ejey")
+    private String ejey;
+    @SerializedName("ejez")
+    private String ejez;
 
     public Sensor() {
     }
 
-    public Sensor(String id, String estado, String temperatura, String url) {
+    public Sensor(String id, String temperatura, String humedad, String presion, String fecha, String ejex, String ejey, String ejez) {
         this.id = id;
-        this.estado = estado;
         this.temperatura = temperatura;
-        this.url = url;
+        this.humedad = humedad;
+        this.presion = presion;
+        this.fecha = fecha;
+        this.ejex = ejex;
+        this.ejey = ejey;
+        this.ejez = ejez;
     }
 
-    public String getid() {
+    public String getId() {
         return id;
     }
 
-    public String getestado() {
-        return estado;
-    }
-
-    public String gettemperatura() {
+    public String getTemperatura() {
         return temperatura;
     }
 
-    public String geturl() {
-        return url;
+    public String getHumedad() {
+        return humedad;
     }
 
-    public void setid(String id) {
+    public String getPresion() {
+        return presion;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public String getEjex() {
+        return ejex;
+    }
+
+    public String getEjey() {
+        return ejey;
+    }
+
+    public String getEjez() {
+        return ejez;
+    }
+
+    public void setId(String id) {
         this.id = id;
     }
 
-    public void setestado(String estado) {
-        this.estado = estado;
-    }
-
-    public void settemperatura(String temperatura) {
+    public void setTemperatura(String temperatura) {
         this.temperatura = temperatura;
     }
 
-    public void seturl(String url) {
-        this.url = url;
+    public void setHumedad(String humedad) {
+        this.humedad = humedad;
+    }
+
+    public void setPresion(String presion) {
+        this.presion = presion;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public void setEjex(String ejex) {
+        this.ejex = ejex;
+    }
+
+    public void setEjey(String ejey) {
+        this.ejey = ejey;
+    }
+
+    public void setEjez(String ejez) {
+        this.ejez = ejez;
     }
 }

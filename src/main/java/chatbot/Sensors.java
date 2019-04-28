@@ -25,7 +25,7 @@ public class Sensors {
     public Sensor find(String id){
         Sensor s=null;
         for (int i = 0; i < this.sensor.size(); i++) {
-            if(id.equals(this.sensor.get(i).getid())){
+            if(id.equals(this.sensor.get(i).getId())){
                 s=this.sensor.get(i);
             }
         }
