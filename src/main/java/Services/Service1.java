@@ -171,6 +171,7 @@ public class Service1 {
         json2.add("ejez", new JsonPrimitive(sensor.getEjez()));
         StringEntity params = new StringEntity(json2.toString());
         httpPut.setEntity(params);
+        System.out.println("put:"+ httpPut.toString());
         HttpResponse response = httpclient.execute(httpPut);
         response.addHeader("content-type", "application/json");
         //step 4: Process the result
