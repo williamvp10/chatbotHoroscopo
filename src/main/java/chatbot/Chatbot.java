@@ -296,7 +296,7 @@ public class Chatbot {
         b1 = new JsonArray();
         e = new JsonObject();
         b.add("titulo", new JsonPrimitive("seleccionar"));
-        b.add("respuesta", new JsonPrimitive("requestIDSensor"));
+        b.add("respuesta", new JsonPrimitive("requestIdSensor"));
         e.add("titulo", new JsonPrimitive("estado de un sensor"));
         e.add("subtitulo", new JsonPrimitive("opcion 2"));
         b1.add(b);
@@ -347,7 +347,7 @@ public class Chatbot {
         JsonArray elements = new JsonArray();
         JsonObject e = null;
         JsonObject servicio = service.getAllSensors();
-        JsonArray elementosServicio = (JsonArray) servicio.get("sensors").getAsJsonArray();
+        JsonArray elementosServicio = (JsonArray) servicio.get("sensor").getAsJsonArray();
 
         for (int i = 0; i < elementosServicio.size(); i++) {
             e = new JsonObject();
