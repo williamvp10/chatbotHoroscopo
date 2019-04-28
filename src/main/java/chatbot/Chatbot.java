@@ -228,7 +228,7 @@ public class Chatbot {
         } else if (botIntent.equals("botopciones") || botIntent.equals("botMenuOpciones")) {
             type = "MenuOpciones";
             botUtterance = "opciones:";
-            out = getbotMenuOpciones();
+            out = (JsonObject) getbotMenuOpciones();
         } else if (botIntent.equals("botAllSensors")) {
             type = "AllSensors";
             botUtterance = "todos los sensores";
@@ -304,6 +304,7 @@ public class Chatbot {
         b.add("respuesta", new JsonPrimitive("requestModificarActuador"));
         buttons.add(b);
         out.add("buttons", buttons);
+        System.out.println("entro: "+out.toString());
         return out;
     }
 
