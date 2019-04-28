@@ -262,7 +262,6 @@ public class Chatbot {
             botUtterance = "escoja sensor";
             out = getbotIdSensor2();
         }
-        out.add("buttons", buttons);
         out.add("botIntent", context.get("botIntent"));
         out.add("botUtterance", new JsonPrimitive(botUtterance));
         out.add("type", new JsonPrimitive(type));
@@ -304,7 +303,6 @@ public class Chatbot {
         b.add("respuesta", new JsonPrimitive("requestModificarActuador"));
         buttons.add(b);
         out.add("buttons", buttons);
-        System.out.println("entro: "+out.toString());
         return out;
     }
 
