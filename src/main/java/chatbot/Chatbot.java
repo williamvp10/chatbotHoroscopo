@@ -133,6 +133,7 @@ public class Chatbot {
                             this.sensor.setTemperatura("" + (Integer.parseInt(this.sensor.getTemperatura()) + 3));
                             this.sensor.setHumedad("" + (Integer.parseInt(this.sensor.getHumedad()) + 3));
                             this.sensor.setPresion("" + (Integer.parseInt(this.sensor.getPresion()) + 3));
+                            System.out.println("sensor: "+this.sensor.getId()+""+this.sensor.getTemperatura()+" "+this.sensor.toString());
                         }
                     }
                 }

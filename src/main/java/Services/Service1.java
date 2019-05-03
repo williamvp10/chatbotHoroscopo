@@ -182,6 +182,7 @@ public class Service1 {
             int statusCode = response.getStatusLine().getStatusCode();
             System.out.println("status:"+statusCode);
         } catch (IOException ioe) {
+            ioe.printStackTrace();
             System.out.println("error");
         }
 
