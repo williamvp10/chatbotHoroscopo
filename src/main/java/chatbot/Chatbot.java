@@ -382,9 +382,9 @@ public class Chatbot {
             elements.add(e);
             System.out.println(" elementos " + elements);
         }
+        
         out.add("elements", elements);
         out.add("buttons", buttons);
-        out.add("elements", elements);
         return out;
     }
 
@@ -538,14 +538,19 @@ public class Chatbot {
         return out;
     }
 
-    public JsonObject getbotModificarSensor() throws IOException {
+    public JsonObject getbotModificarSensor() {
         JsonObject out = new JsonObject();
         JsonArray buttons = new JsonArray();
         JsonObject b = null;
         JsonArray b1 = null;
         JsonArray elements = new JsonArray();
         JsonObject e = null;
-        JsonObject obj = service.getModificarSensor(this.sensor);
+        JsonObject obj=null;
+        try {
+            obj = service.getModificarSensor(this.sensor);
+        } catch (IOException ex) {
+            Logger.getLogger(Chatbot.class.getName()).log(Level.SEVERE, null, ex);
+        }
         e = new JsonObject();
         e.add("titulo", new JsonPrimitive(" temperatura: " + obj.get("temperatura").getAsString() + "  humedad: " + obj.get("humedad").getAsString() + " presion: " + obj.get("presion").getAsString()));
         e.add("subtitulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString()));
@@ -635,7 +640,6 @@ public class Chatbot {
         }
         out.add("elements", elements);
         out.add("buttons", buttons);
-        out.add("elements", elements);
         return out;
     }
 }
