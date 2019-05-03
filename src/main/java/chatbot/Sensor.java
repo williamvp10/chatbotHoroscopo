@@ -21,6 +21,14 @@ public class Sensor {
     private String ejez;
 
     public Sensor() {
+         this.id = "";
+        this.temperatura = "";
+        this.humedad = "";
+        this.presion = "";
+        this.fecha = "";
+        this.ejex = "";
+        this.ejey = "";
+        this.ejez = "";
     }
 
     public Sensor(String id, String temperatura, String humedad, String presion, String fecha, String ejex, String ejey, String ejez) {
