@@ -5,7 +5,7 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 import spark.Spark;
-import chatbot.Chatbot;
+import chatbot.Chatbot1;
 import weatherman.web.utils.ResponseError;
 import static weatherman.web.utils.JSONUtil.*;
 
@@ -21,7 +21,7 @@ public class WebServer {
         Spark.setPort(getHerokuAssignedPort());
         Spark.staticFileLocation("/public");
 
-        final Chatbot bot = new Chatbot();
+        final Chatbot1 bot = new Chatbot1();
 
         get("/", (req, res) -> "Hello World! I am WeatherMan, the weather bot!!");
 
@@ -36,7 +36,7 @@ public class WebServer {
                 String keyValueSplitter = "=";
                 String[] params = body.split(splitChar);
 
-                String userUtterance = "noneSaid", userType = "noneSaid";
+                String userUtterance = "noneSaid", userType = "noneSaid", userImagen = "noneSaid";
 
                 for (int i = 0; i < params.length; i++) {
 
@@ -58,6 +58,14 @@ public class WebServer {
                         }
                         userType = userType.replaceAll("%20", " ");
                         userType = userType.replaceAll("%3A", ":");
+                    }else if (sv[0].equals("userImagen")) {
+                        if (sv.length > 0) {
+                            userImagen = sv[1];
+                        } else {
+                            userImagen = "";
+                        }
+                        userImagen = userImagen.replaceAll("%20", " ");
+                        userImagen = userImagen.replaceAll("%3A", ":");
                     }
                 }
 
@@ -70,6 +78,10 @@ public class WebServer {
                     if (!userType.equals("noneSaid")) {
                         System.out.println("type:" + userType);
                         userInput.add("userType", new JsonPrimitive(userType));
+                    }
+                    if (!userImagen.equals("noneSaid")) {
+                        System.out.println("Image:" + userImagen);
+                        userInput.add("userImagen", new JsonPrimitive(userImagen));
                     }
                     String botResponse = null;
                     try {
