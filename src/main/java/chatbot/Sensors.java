@@ -28,6 +28,7 @@ public class Sensors {
             if(id.equals(this.sensor.get(i).getId())){
                 s=this.sensor.get(i);
                 System.out.println("encontro "+this.sensor.get(i).getId());
+                System.out.println("encontro "+this.sensor.get(i).getTemperatura());
                 break;
             }
         }

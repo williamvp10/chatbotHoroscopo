@@ -131,6 +131,7 @@ public class Chatbot {
                         if (entrada.length > 2) {
                             this.sensor = this.sensors.find(entrada[2]);
                             this.sensor.setTemperatura("" + (Integer.parseInt(this.sensor.getTemperatura()) + 3));
+                            System.out.println(this.sensor.getTemperatura());
                             this.sensor.setHumedad("" + (Integer.parseInt(this.sensor.getHumedad()) + 3));
                             this.sensor.setPresion("" + (Integer.parseInt(this.sensor.getPresion()) + 3));
                             System.out.println("sensor: "+this.sensor.getId()+" "+this.sensor.getTemperatura()+" "+this.sensor.toString());
