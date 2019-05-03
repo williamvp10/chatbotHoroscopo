@@ -154,6 +154,7 @@ public class Service1 {
 
     public JsonObject getModificarSensor(Sensor sensor)
             throws ClientProtocolException, IOException {
+        System.out.println(sensor);
         String url = "http://pruebares.herokuapp.com/myApp/rest/sensores/";
 
         //step 2: Create a HTTP client
