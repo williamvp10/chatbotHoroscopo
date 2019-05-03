@@ -130,9 +130,9 @@ public class Chatbot {
                     if (entrada[1].equals("IdSensor2")) {
                         if (entrada.length > 2) {
                             this.sensor = this.sensors.find(entrada[2]);
-                            this.sensor.setTemperatura("" + (Integer.parseInt(this.sensor.getTemperatura()) + 1));
-                            this.sensor.setHumedad("" + (Integer.parseInt(this.sensor.getHumedad()) + 1));
-                            this.sensor.setPresion("" + (Integer.parseInt(this.sensor.getPresion()) + 1));
+                            this.sensor.setTemperatura("" + (Integer.parseInt(this.sensor.getTemperatura()) + 3));
+                            this.sensor.setHumedad("" + (Integer.parseInt(this.sensor.getHumedad()) + 3));
+                            this.sensor.setPresion("" + (Integer.parseInt(this.sensor.getPresion()) + 3));
                         }
                     }
                 }

@@ -16,6 +16,7 @@ import com.google.gson.JsonObject;
 
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
+import org.apache.http.HttpHeaders;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
@@ -172,12 +173,11 @@ public class Service1 {
         json2.add("ejez", new JsonPrimitive(sensor.getEjez()));
         StringEntity params = new StringEntity(json2.toString());
         httpPut.setEntity(params);
+        httpPut.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
         System.out.println("put:" + httpPut);
         //step 4: Process the result
         HttpResponse response = null;
         try {
-            httpPut.setEntity(new StringEntity(json2.toString(),
-                    ContentType.APPLICATION_JSON));
             response = httpclient.execute(httpPut);
             int statusCode = response.getStatusLine().getStatusCode();
             System.out.println("status:"+statusCode);
