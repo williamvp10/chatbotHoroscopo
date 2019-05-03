@@ -352,7 +352,7 @@ public class Chatbot {
         try {
             servicio = service.getAllSensors();
         } catch (IOException ex) {
-            Logger.getLogger(Chatbot1.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Chatbot.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
             JsonArray elementosServicio = (JsonArray) servicio.get("sensor").getAsJsonArray();
@@ -399,7 +399,7 @@ public class Chatbot {
         try {
             servicio = service.getIdSensor();
         } catch (IOException ex) {
-            Logger.getLogger(Chatbot1.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Chatbot.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
             JsonArray elementosServicio = (JsonArray) servicio.get("sensor").getAsJsonArray();
@@ -549,7 +549,7 @@ public class Chatbot {
         try {
             obj = service.getModificarSensor(this.sensor);
         } catch (IOException ex) {
-            Logger.getLogger(Chatbot1.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Chatbot.class.getName()).log(Level.SEVERE, null, ex);
         }
         e = new JsonObject();
         e.add("titulo", new JsonPrimitive(" temperatura: " + obj.get("temperatura").getAsString() + "  humedad: " + obj.get("humedad").getAsString() + " presion: " + obj.get("presion").getAsString()));
@@ -573,7 +573,7 @@ public class Chatbot {
         try {
             servicio = service.getIdSensor();
         } catch (IOException ex) {
-            Logger.getLogger(Chatbot1.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Chatbot.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
             JsonArray elementosServicio = (JsonArray) servicio.get("sensor").getAsJsonArray();
