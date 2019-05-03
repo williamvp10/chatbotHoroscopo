@@ -187,6 +187,8 @@ public class Chatbot {
             context.add("currentTask", new JsonPrimitive("taskModificarSensor"));
         } else if (userIntent.equals("intentIdSensor2")) {
             context.add("currentTask", new JsonPrimitive("taskIdSensor2"));
+        } else if (userIntent.equals("intentIdSensor3")) {
+            context.add("currentTask", new JsonPrimitive("taskIdSensor3"));
         } else if (userIntent.equals("intentPreguntaEstadoActuador")) {
             context.add("currentTask", new JsonPrimitive("taskPreguntaEstadoActuador"));
         }
@@ -222,6 +224,8 @@ public class Chatbot {
             context.add("botIntent", new JsonPrimitive("botModificarSensor"));
         } else if (currentTask.equals("taskIdSensor2")) {
             context.add("botIntent", new JsonPrimitive("botIdSensor2"));
+        } else if (currentTask.equals("taskIdSensor3")) {
+            context.add("botIntent", new JsonPrimitive("botIdSensor3"));
         } else if (currentTask.equals("taskPreguntaEstadoActuador")) {
             context.add("botIntent", new JsonPrimitive("botPreguntaEstadoActuador"));
         }
