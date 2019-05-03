@@ -3,7 +3,8 @@ package chatbot;
 import com.google.gson.annotations.SerializedName;
 
 public class Sensor {
-    @SerializedName("id")    
+
+    @SerializedName("id")
     private String id;
     @SerializedName("temperatura")
     private String temperatura;
@@ -19,9 +20,11 @@ public class Sensor {
     private String ejey;
     @SerializedName("ejez")
     private String ejez;
+    @SerializedName("actuador")
+    private String actuador;
 
     public Sensor() {
-         this.id = "";
+        this.id = "";
         this.temperatura = "";
         this.humedad = "";
         this.presion = "";
@@ -29,9 +32,10 @@ public class Sensor {
         this.ejex = "";
         this.ejey = "";
         this.ejez = "";
+        this.actuador = "";
     }
 
-    public Sensor(String id, String temperatura, String humedad, String presion, String fecha, String ejex, String ejey, String ejez) {
+    public Sensor(String id, String temperatura, String humedad, String presion, String fecha, String ejex, String ejey, String ejez, String actuador) {
         this.id = id;
         this.temperatura = temperatura;
         this.humedad = humedad;
@@ -40,6 +44,7 @@ public class Sensor {
         this.ejex = ejex;
         this.ejey = ejey;
         this.ejez = ejez;
+        this.actuador = actuador;
     }
 
     public String getId() {
@@ -105,4 +110,13 @@ public class Sensor {
     public void setEjez(String ejez) {
         this.ejez = ejez;
     }
+
+    public String getActuador() {
+        return actuador;
+    }
+
+    public void setActuador(String actuador) {
+        this.actuador = actuador;
+    }
+
 }

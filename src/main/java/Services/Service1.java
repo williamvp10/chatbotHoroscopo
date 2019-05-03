@@ -172,6 +172,7 @@ public class Service1 {
         json2.add("ejex", new JsonPrimitive(sensor.getEjex()));
         json2.add("ejey", new JsonPrimitive(sensor.getEjey()));
         json2.add("ejez", new JsonPrimitive(sensor.getEjez()));
+        json2.add("actuador", new JsonPrimitive(sensor.getActuador()));
         StringEntity params = new StringEntity(json2.toString());
         httpPut.setEntity(params);
         httpPut.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");

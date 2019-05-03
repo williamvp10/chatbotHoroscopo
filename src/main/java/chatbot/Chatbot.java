@@ -111,6 +111,7 @@ public class Chatbot {
                 } else if (entrada[0].trim().equals("requestEstadoActuador")) {
                     userAction.add("userIntent", new JsonPrimitive("intentEstadoActuador"));
                 } else if (entrada[0].trim().equals("requestModificarActuador")) {
+                    this.sensor.setActuador(userUtterance);
                     userAction.add("userIntent", new JsonPrimitive("intentModificarActuador"));
                 } else if (entrada[0].trim().equals("requestagradecimiento")) {
                     userAction.add("userIntent", new JsonPrimitive("intentagradecimiento"));
@@ -118,6 +119,10 @@ public class Chatbot {
                     userAction.add("userIntent", new JsonPrimitive("intentModificarSensor"));
                 } else if (entrada[0].trim().equals("requestIdSensor2")) {
                     userAction.add("userIntent", new JsonPrimitive("intentIdSensor2"));
+                } else if (entrada[0].trim().equals("requestIdSensor3")) {
+                    userAction.add("userIntent", new JsonPrimitive("intentIdSensor3"));
+                } else if (entrada[0].trim().equals("requestPreguntaEstadoActuador")) {
+                    userAction.add("userIntent", new JsonPrimitive("intentPreguntaEstadoActuador"));
                 } else {
                     userAction.add("userIntent", new JsonPrimitive("intenterror"));
                 }
@@ -134,7 +139,13 @@ public class Chatbot {
                             System.out.println(this.sensor.getTemperatura());
                             this.sensor.setHumedad("" + (Double.parseDouble(this.sensor.getHumedad()) + 3));
                             this.sensor.setPresion("" + (Double.parseDouble(this.sensor.getPresion()) + 3));
-                            System.out.println("sensor: "+this.sensor.getId()+" "+this.sensor.getTemperatura()+" "+this.sensor.toString());
+                            System.out.println("sensor: " + this.sensor.getId() + " " + this.sensor.getTemperatura() + " " + this.sensor.toString());
+                        }
+                    }
+                    if (entrada[1].equals("IdSensor3")) {
+                        if (entrada.length > 2) {
+                            this.sensor = this.sensors.find(entrada[2]);
+                            System.out.println("sensor: " + this.sensor.getId() + " " + this.sensor.getTemperatura() + " " + this.sensor.toString());
                         }
                     }
                 }
@@ -176,6 +187,8 @@ public class Chatbot {
             context.add("currentTask", new JsonPrimitive("taskModificarSensor"));
         } else if (userIntent.equals("intentIdSensor2")) {
             context.add("currentTask", new JsonPrimitive("taskIdSensor2"));
+        } else if (userIntent.equals("intentPreguntaEstadoActuador")) {
+            context.add("currentTask", new JsonPrimitive("taskPreguntaEstadoActuador"));
         }
     }
 
@@ -209,6 +222,8 @@ public class Chatbot {
             context.add("botIntent", new JsonPrimitive("botModificarSensor"));
         } else if (currentTask.equals("taskIdSensor2")) {
             context.add("botIntent", new JsonPrimitive("botIdSensor2"));
+        } else if (currentTask.equals("taskPreguntaEstadoActuador")) {
+            context.add("botIntent", new JsonPrimitive("botPreguntaEstadoActuador"));
         }
     }
 
@@ -265,7 +280,16 @@ public class Chatbot {
             type = "IdSensor2";
             botUtterance = "escoja sensor";
             out = getbotIdSensor2();
+        } else if (botIntent.equals("botIdSensor3")) {
+            type = "IdSensor2";
+            botUtterance = "escoja sensor";
+            out = getbotIdSensor3();
+        } else if (botIntent.equals("botPreguntaEstadoActuador")) {
+            type = "PreguntaEstadoActuador";
+            botUtterance = "digite el mensaje";
+            out.add("buttons", buttons);
         }
+
         out.add("botIntent", context.get("botIntent"));
         out.add("botUtterance", new JsonPrimitive(botUtterance));
         out.add("type", new JsonPrimitive(type));
@@ -322,7 +346,7 @@ public class Chatbot {
         b1 = new JsonArray();
         e = new JsonObject();
         b.add("titulo", new JsonPrimitive("seleccionar"));
-        b.add("respuesta", new JsonPrimitive("requestModificarActuador"));
+        b.add("respuesta", new JsonPrimitive("requestIdSensor3"));
         e.add("titulo", new JsonPrimitive("modificar Actuador"));
         e.add("subtitulo", new JsonPrimitive("opcion 4"));
         b1.add(b);
@@ -384,7 +408,7 @@ public class Chatbot {
             elements.add(e);
             System.out.println(" elementos " + elements);
         }
-        
+
         out.add("elements", elements);
         out.add("buttons", buttons);
         return out;
@@ -512,18 +536,23 @@ public class Chatbot {
         return out;
     }
 
-    public JsonObject getbotModificarActuador() throws IOException {
+    public JsonObject getbotModificarActuador() {
         JsonObject out = new JsonObject();
         JsonArray buttons = new JsonArray();
         JsonObject b = null;
         JsonArray b1 = null;
         JsonArray elements = new JsonArray();
-        JsonObject e = new JsonObject();
-        JsonObject servicio = service.getModificarActuador();
-        JsonObject obj = servicio.get("actuador").getAsJsonObject();
-        e.add("titulo", new JsonPrimitive("" + " " + obj.get("estado").getAsString()));
-        e.add("subtitulo", new JsonPrimitive("" + "valor: " + obj.get("valor").getAsString()));
-        e.add("url", new JsonPrimitive("" + "" + obj.get("url").getAsString()));
+        JsonObject e = null;
+        JsonObject obj = null;
+        try {
+            obj = service.getModificarSensor(this.sensor);
+        } catch (IOException ex) {
+            Logger.getLogger(Chatbot.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        e = new JsonObject();
+        e.add("titulo", new JsonPrimitive(" temperatura: " + obj.get("temperatura").getAsString() + "  humedad: " + obj.get("humedad").getAsString() + " presion: " + obj.get("presion").getAsString()));
+        e.add("subtitulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString()));
+        e.add("url", new JsonPrimitive("" + "https://www.pce-instruments.com/espanol/slot/4/artimg/large/pce-instruments-sensor-de-temperatura-pce-ir-57-5638928_957363.jpg"));
         e.add("buttons", new JsonArray());
         elements.add(e);
         out.add("buttons", buttons);
@@ -547,7 +576,7 @@ public class Chatbot {
         JsonArray b1 = null;
         JsonArray elements = new JsonArray();
         JsonObject e = null;
-        JsonObject obj=null;
+        JsonObject obj = null;
         try {
             obj = service.getModificarSensor(this.sensor);
         } catch (IOException ex) {
@@ -635,6 +664,89 @@ public class Chatbot {
             b.add("titulo", new JsonPrimitive("Seleccionar"));
             String var = "" + obj.get("id").getAsString();
             b.add("respuesta", new JsonPrimitive("requestModificarSensor:IdSensor2:" + var));
+            b1.add(b);
+            e.add("buttons", b1);
+            elements.add(e);
+            System.out.println("elements:" + elements);
+        }
+        out.add("elements", elements);
+        out.add("buttons", buttons);
+        return out;
+    }
+
+    public JsonObject getbotIdSensor3() {
+        JsonObject out = new JsonObject();
+        JsonArray buttons = new JsonArray();
+        JsonObject b = null;
+        JsonArray b1 = null;
+        JsonArray elements = new JsonArray();
+        JsonObject e = null;
+        JsonObject servicio = null;
+        try {
+            servicio = service.getIdSensor();
+        } catch (IOException ex) {
+            Logger.getLogger(Chatbot.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            JsonArray elementosServicio = (JsonArray) servicio.get("sensor").getAsJsonArray();
+            System.out.println("salio");
+            System.out.println(servicio);
+            this.sensors = new Sensors();
+            for (int i = 0; i < elementosServicio.size(); i++) {
+                JsonObject obj = elementosServicio.get(i).getAsJsonObject();
+                Sensor sensor = new Sensor();
+                sensor.setId(obj.get("id").getAsString());
+                sensor.setHumedad(obj.get("humedad").getAsString());
+                sensor.setTemperatura(obj.get("temperatura").getAsString());
+                sensor.setPresion(obj.get("presion").getAsString());
+                sensor.setFecha(obj.get("fecha").getAsString());
+                sensor.setEjex(obj.get("ejex").getAsString());
+                sensor.setEjey(obj.get("ejey").getAsString());
+                sensor.setEjez(obj.get("ejez").getAsString());
+                sensor.setActuador(obj.get("actuador").getAsString());
+                this.sensors.add(sensor);
+            }
+            for (int i = 0; i < elementosServicio.size(); i++) {
+                e = new JsonObject();
+                JsonObject obj = elementosServicio.get(i).getAsJsonObject();
+                System.out.println("obj:" + obj);
+                e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString()));
+                e.add("subtitulo", new JsonPrimitive("id: " + obj.get("id").getAsString()));
+                e.add("url", new JsonPrimitive("https://www.pce-instruments.com/espanol/slot/4/artimg/large/pce-instruments-sensor-de-temperatura-pce-ir-57-5638928_957363.jpg"));
+                b = new JsonObject();
+                b1 = new JsonArray();
+                b.add("titulo", new JsonPrimitive("Seleccionar"));
+                String var = "" + obj.get("id").getAsString();
+                b.add("respuesta", new JsonPrimitive("requestPreguntaEstadoActuador:IdSensor3:" + var));
+                b1.add(b);
+                e.add("buttons", b1);
+                elements.add(e);
+                System.out.println("elements:" + elements);
+            }
+        } catch (Exception err) {
+            this.sensors = new Sensors();
+            JsonObject obj = servicio.get("sensor").getAsJsonObject();
+            Sensor sensor = new Sensor();
+            sensor.setId(obj.get("id").getAsString());
+            sensor.setHumedad(obj.get("humedad").getAsString());
+            sensor.setTemperatura(obj.get("temperatura").getAsString());
+            sensor.setPresion(obj.get("presion").getAsString());
+            sensor.setFecha(obj.get("fecha").getAsString());
+            sensor.setEjex(obj.get("ejex").getAsString());
+            sensor.setEjey(obj.get("ejey").getAsString());
+            sensor.setEjez(obj.get("ejez").getAsString());
+            sensor.setActuador(obj.get("actuador").getAsString());
+            this.sensors.add(sensor);
+            e = new JsonObject();
+            System.out.println("obj:" + obj);
+            e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString()));
+            e.add("subtitulo", new JsonPrimitive("id: " + obj.get("id").getAsString()));
+            e.add("url", new JsonPrimitive("https://www.pce-instruments.com/espanol/slot/4/artimg/large/pce-instruments-sensor-de-temperatura-pce-ir-57-5638928_957363.jpg"));
+            b = new JsonObject();
+            b1 = new JsonArray();
+            b.add("titulo", new JsonPrimitive("Seleccionar"));
+            String var = "" + obj.get("id").getAsString();
+            b.add("respuesta", new JsonPrimitive("requestPreguntaEstadoActuador:IdSensor3:" + var));
             b1.add(b);
             e.add("buttons", b1);
             elements.add(e);
