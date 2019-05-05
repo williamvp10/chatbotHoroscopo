@@ -254,7 +254,7 @@ public class Chatbot {
             out.add("buttons", buttons);
         } else if (botIntent.equals("botsaludo") || botIntent.equals("botSaludo")) {
             type = "Saludo";
-            botUtterance = "hola" +userName+ " en que puedo ayudarte?";
+            botUtterance = "hola " +userName+ " en que puedo ayudarte?";
             out = getbotSaludo();
         } else if (botIntent.equals("botopciones") || botIntent.equals("botMenuOpciones")) {
             type = "MenuOpciones";
