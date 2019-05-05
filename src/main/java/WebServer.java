@@ -32,26 +32,25 @@ public class WebServer {
             public Object handle(Request request, Response response) {
 
                 String body = request.body();
-
                 System.out.println("body: " + body);
                 String splitChar = "&";
                 String keyValueSplitter = "=";
                 String[] params = body.split(splitChar);
 
-                    String userInfo = "noneSaid",userUtterance = "noneSaid", userType = "noneSaid", userImagen = "noneSaid";
+                    String userName = "noneSaid",userUtterance = "noneSaid", userType = "noneSaid", userImagen = "noneSaid";
 
                 for (int i = 0; i < params.length; i++) {
 
                     String[] sv = params[i].split(keyValueSplitter);
 
-                    if (sv[0].equals("userInfo")) {
+                    if (sv[0].equals("userName")) {
                         if (sv.length > 0) {
-                            userInfo = sv[1];
+                            userName = sv[1];
                         } else {
-                            userInfo = "";
+                            userName = "";
                         }
-                        userInfo = userInfo.replaceAll("%20", " ");
-                        userInfo = userInfo.replaceAll("%3A", ":");
+                        userName = userName.replaceAll("%20", " ");
+                        userName = userName.replaceAll("%3A", ":");
                     } else if (sv[0].equals("userUtterance")) {
                         if (sv.length > 0) {
                             userUtterance = sv[1];
@@ -85,10 +84,10 @@ public class WebServer {
 
                     JsonObject userInput = new JsonObject();
                     userInput.add("userUtterance", new JsonPrimitive(userUtterance));
-                    if (!userInfo.equals("noneSaid")) {
-                        System.out.println("info:" + userInfo);
+                    if (!userName.equals("noneSaid")) {
+                        System.out.println("name:" + userName);
                         JsonParser parser = new JsonParser();
-                        userInput.add("userInfo",(JsonObject) parser.parse(userInfo));
+                        userInput.add("userName",new JsonPrimitive(userName));
                     }
                     if (!userType.equals("noneSaid")) {
                         System.out.println("type:" + userType);

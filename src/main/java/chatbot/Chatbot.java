@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 public class Chatbot {
 
     JsonObject context;
-    JsonObject user;
+    String userName;
     Service1 service;
     Sensor sensor;
     Actuador actuador;
@@ -45,7 +45,7 @@ public class Chatbot {
 
     public Chatbot() {
         context = new JsonObject();
-        user = new JsonObject();
+        userName = "";
         context.add("currentTask", new JsonPrimitive("none"));
         service = new Service1();
         this.sensor = new Sensor();
@@ -78,12 +78,12 @@ public class Chatbot {
     public JsonObject processUserInput(JsonObject userInput) throws IOException {
         String userUtterance = null;
         JsonObject userAction = new JsonObject();
-        
+
         //info usuario 
-        if (userInput.has("userInfo")) {
-            user = userInput.get("userInfo").getAsJsonObject();
+        if (userInput.has("userName")) {
+            userName = userInput.get("userName").getAsString();;
         }
-        System.out.println("user: "+user.toString());
+        System.out.println("user: " + userName);
         //default case
         userAction.add("userIntent", new JsonPrimitive(""));
         if (userInput.has("userUtterance")) {
@@ -254,11 +254,7 @@ public class Chatbot {
             out.add("buttons", buttons);
         } else if (botIntent.equals("botsaludo") || botIntent.equals("botSaludo")) {
             type = "Saludo";
-            if(user.has("first_name")){
-                botUtterance = "hola"+user.get("first_name").getAsString()+" en que puedo ayudarte?"; 
-            }else{
-                 botUtterance = "hola en que puedo ayudarte?";
-            }
+            botUtterance = "hola" +userName+ " en que puedo ayudarte?";
             out = getbotSaludo();
         } else if (botIntent.equals("botopciones") || botIntent.equals("botMenuOpciones")) {
             type = "MenuOpciones";
