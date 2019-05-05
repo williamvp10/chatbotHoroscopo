@@ -10,9 +10,11 @@ import weatherman.web.utils.ResponseError;
 import static weatherman.web.utils.JSONUtil.*;
 
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 import java.io.IOException;
 import java.util.logging.Level;
+import static java.util.logging.Level.parse;
 import java.util.logging.Logger;
 
 public class WebServer {
@@ -36,13 +38,21 @@ public class WebServer {
                 String keyValueSplitter = "=";
                 String[] params = body.split(splitChar);
 
-                String userUtterance = "noneSaid", userType = "noneSaid", userImagen = "noneSaid";
+                    String userInfo = "noneSaid",userUtterance = "noneSaid", userType = "noneSaid", userImagen = "noneSaid";
 
                 for (int i = 0; i < params.length; i++) {
 
                     String[] sv = params[i].split(keyValueSplitter);
 
-                    if (sv[0].equals("userUtterance")) {
+                    if (sv[0].equals("userInfo")) {
+                        if (sv.length > 0) {
+                            userInfo = sv[1];
+                        } else {
+                            userInfo = "";
+                        }
+                        userInfo = userInfo.replaceAll("%20", " ");
+                        userInfo = userInfo.replaceAll("%3A", ":");
+                    } else if (sv[0].equals("userUtterance")) {
                         if (sv.length > 0) {
                             userUtterance = sv[1];
                         } else {
@@ -75,6 +85,11 @@ public class WebServer {
 
                     JsonObject userInput = new JsonObject();
                     userInput.add("userUtterance", new JsonPrimitive(userUtterance));
+                    if (!userInfo.equals("noneSaid")) {
+                        System.out.println("info:" + userInfo);
+                        JsonParser parser = new JsonParser();
+                        userInput.add("userInfo",(JsonObject) parser.parse(userInfo));
+                    }
                     if (!userType.equals("noneSaid")) {
                         System.out.println("type:" + userType);
                         userInput.add("userType", new JsonPrimitive(userType));
