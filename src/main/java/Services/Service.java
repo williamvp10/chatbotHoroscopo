@@ -25,7 +25,7 @@ public class Service {
 
     public JsonObject getAllSensors()
             throws ClientProtocolException, IOException {
-        String url = "" + "https://sensoresusa.herokuapp.com/myApp/rest/sensores"; //step 2: Create a HTTP client
+        String url = "" + "http://pruebares.herokuapp.com/myApp/rest/sensores"; //step 2: Create a HTTP client
         HttpClient httpclient = HttpClientBuilder.create().build();
 
         //step 3: Create a HTTPGet object and execute the url
@@ -189,7 +189,7 @@ public class Service {
 
     public JsonObject getIdSensor2()
             throws ClientProtocolException, IOException {
-        String url = "" + "https://sensoresusa.herokuapp.com/myApp/rest/sensores"; //step 2: Create a HTTP client
+        String url = "" + "http://pruebares.herokuapp.com/myApp/rest/sensores"; //step 2: Create a HTTP client
         HttpClient httpclient = HttpClientBuilder.create().build();
 
         //step 3: Create a HTTPGet object and execute the url
