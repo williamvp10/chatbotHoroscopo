@@ -498,8 +498,8 @@ public class Chatbot1 {
             for (int i = 0; i < elementosServicio.size(); i++) {
                 e = new JsonObject();
                 JsonObject obj = elementosServicio.get(i).getAsJsonObject();
-                e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("sensor.id").getAsString()));
-                e.add("subtitulo", new JsonPrimitive("" + "id: " + obj.get("sensor.id").getAsString()));
+                e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString()));
+                e.add("subtitulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString()));
                 e.add("url", new JsonPrimitive("" + "https://www.pce-instruments.com/espanol/slot/4/artimg/large/pce-instruments-sensor-de-temperatura-pce-ir-57-5638928_957363.jpg"));
                 b = new JsonObject();
                 b1 = new JsonArray();
@@ -525,8 +525,8 @@ public class Chatbot1 {
             sensor.setEjez(obj.get("ejez").getAsString());
             sensor.setActuador(obj.get("actuador").getAsString());
             this.sensorIdSensor.add(sensor);
-            e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("sensor.id").getAsString()));
-            e.add("subtitulo", new JsonPrimitive("" + "id: " + obj.get("sensor.id").getAsString()));
+            e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString()));
+            e.add("subtitulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString()));
             e.add("url", new JsonPrimitive("" + "https://www.pce-instruments.com/espanol/slot/4/artimg/large/pce-instruments-sensor-de-temperatura-pce-ir-57-5638928_957363.jpg"));
             b = new JsonObject();
             b1 = new JsonArray();
@@ -689,8 +689,8 @@ public class Chatbot1 {
             for (int i = 0; i < elementosServicio.size(); i++) {
                 e = new JsonObject();
                 JsonObject obj = elementosServicio.get(i).getAsJsonObject();
-                e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("sensor.id").getAsString()));
-                e.add("subtitulo", new JsonPrimitive("" + "id: " + obj.get("sensor.id").getAsString()));
+                e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString()));
+                e.add("subtitulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString()));
                 e.add("url", new JsonPrimitive("" + "https://www.pce-instruments.com/espanol/slot/4/artimg/large/pce-instruments-sensor-de-temperatura-pce-ir-57-5638928_957363.jpg"));
                 b = new JsonObject();
                 b1 = new JsonArray();
@@ -716,8 +716,8 @@ public class Chatbot1 {
             sensor.setEjez(obj.get("ejez").getAsString());
             sensor.setActuador(obj.get("actuador").getAsString());
             this.sensorIdSensor2.add(sensor);
-            e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("sensor.id").getAsString()));
-            e.add("subtitulo", new JsonPrimitive("" + "id: " + obj.get("sensor.id").getAsString()));
+            e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString()));
+            e.add("subtitulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString()));
             e.add("url", new JsonPrimitive("" + "https://www.pce-instruments.com/espanol/slot/4/artimg/large/pce-instruments-sensor-de-temperatura-pce-ir-57-5638928_957363.jpg"));
             b = new JsonObject();
             b1 = new JsonArray();
@@ -774,8 +774,8 @@ public class Chatbot1 {
             for (int i = 0; i < elementosServicio.size(); i++) {
                 e = new JsonObject();
                 JsonObject obj = elementosServicio.get(i).getAsJsonObject();
-                e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("sensor.id").getAsString()));
-                e.add("subtitulo", new JsonPrimitive("" + "id: " + obj.get("sensor.id").getAsString()));
+                e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString()));
+                e.add("subtitulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString()));
                 e.add("url", new JsonPrimitive("" + "https://www.pce-instruments.com/espanol/slot/4/artimg/large/pce-instruments-sensor-de-temperatura-pce-ir-57-5638928_957363.jpg"));
                 b = new JsonObject();
                 b1 = new JsonArray();
@@ -801,8 +801,8 @@ public class Chatbot1 {
             sensor.setEjez(obj.get("ejez").getAsString());
             sensor.setActuador(obj.get("actuador").getAsString());
             this.sensorIdSensor3.add(sensor);
-            e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("sensor.id").getAsString()));
-            e.add("subtitulo", new JsonPrimitive("" + "id: " + obj.get("sensor.id").getAsString()));
+            e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString()));
+            e.add("subtitulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString()));
             e.add("url", new JsonPrimitive("" + "https://www.pce-instruments.com/espanol/slot/4/artimg/large/pce-instruments-sensor-de-temperatura-pce-ir-57-5638928_957363.jpg"));
             b = new JsonObject();
             b1 = new JsonArray();
@@ -852,8 +852,8 @@ public class Chatbot1 {
             for (int i = 0; i < elementosServicio.size(); i++) {
                 e = new JsonObject();
                 JsonObject obj = elementosServicio.get(i).getAsJsonObject();
-                e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("sensor.id").getAsString()));
-                e.add("subtitulo", new JsonPrimitive("" + "id: " + obj.get("sensor.id").getAsString()));
+                e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString()));
+                e.add("subtitulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString()));
                 e.add("url", new JsonPrimitive("" + "https://www.pce-instruments.com/espanol/slot/4/artimg/large/pce-instruments-sensor-de-temperatura-pce-ir-57-5638928_957363.jpg"));
                 b = new JsonObject();
                 b1 = new JsonArray();
@@ -879,8 +879,8 @@ public class Chatbot1 {
             sensor.setEjez(obj.get("ejez").getAsString());
             sensor.setActuador(obj.get("actuador").getAsString());
             this.sensorIdSensor4.add(sensor);
-            e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("sensor.id").getAsString()));
-            e.add("subtitulo", new JsonPrimitive("" + "id: " + obj.get("sensor.id").getAsString()));
+            e.add("titulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString()));
+            e.add("subtitulo", new JsonPrimitive("" + "id: " + obj.get("id").getAsString()));
             e.add("url", new JsonPrimitive("" + "https://www.pce-instruments.com/espanol/slot/4/artimg/large/pce-instruments-sensor-de-temperatura-pce-ir-57-5638928_957363.jpg"));
             b = new JsonObject();
             b1 = new JsonArray();
