@@ -104,7 +104,7 @@ public class Service1 {
 
     public JsonObject getEstadoActuador()
             throws ClientProtocolException, IOException {
-        String url = "http://demo5917714.mockable.io/actuador";
+        String url = "http://pruebares.herokuapp.com/myApp/rest/sensores/";
 
         //step 2: Create a HTTP client
         HttpClient httpclient = HttpClientBuilder.create().build();
