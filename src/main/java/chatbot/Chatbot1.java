@@ -160,6 +160,7 @@ public class Chatbot1 {
                             for (int i = 0; i < this.sensorIdSensor2.size(); i++) {
                                 if (entrada[2].equals(this.sensorIdSensor2.get(i).getId())) {
                                     this.sensor = this.sensorIdSensor2.get(i);
+                                    this.sensor.setTemperatura("" + (Double.parseDouble(this.sensor.getTemperatura()) + 3));
                                     break;
                                 }
                             }
