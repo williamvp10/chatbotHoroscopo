@@ -181,8 +181,9 @@ public class Chatbot {
             out = getbotAgradecer();
         } else if (botIntent.equals("botServicioHoroscopo")) {
             type = "ServicioHoroscopo";
-            botUtterance = "your Horoscope";
+            botUtterance = "your Horoscope: ";
             out = getbotServicioHoroscopo();
+            botUtterance+=out.get("elements").getAsJsonArray().get(0).getAsJsonObject().get("titulo").getAsString();
         }
         out.add("botIntent", context.get("botIntent"));
         out.add("botUtterance", new JsonPrimitive(botUtterance));
