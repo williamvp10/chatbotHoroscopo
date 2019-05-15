@@ -226,8 +226,8 @@ public class Chatbot {
 
         e = new JsonObject();
         JsonObject obj = (JsonObject) servicio.get("horoscopo").getAsJsonObject();
-        e.add("titulo", new JsonPrimitive("" + "" + obj.get("hroscope").getAsString()));
-        e.add("subtitulo", new JsonPrimitive("" + "" + obj.get("hroscope").getAsString()));
+        e.add("titulo", new JsonPrimitive("" + "" + obj.get("horoscope").getAsString()));
+        e.add("subtitulo", new JsonPrimitive("" + obj.get("sunsign").getAsString()));
         e.add("url", new JsonPrimitive("" + "https://cdne.ojo.pe/thumbs/uploads/img/2018/05/22/cuales-son-las-fechas-de-los-decanatos-de-cada-sig-256596-jpg_700x0.jpg"));
         e.add("buttons", new JsonArray());
         elements.add(e);
