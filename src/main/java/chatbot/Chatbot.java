@@ -227,14 +227,16 @@ public class Chatbot {
         try {
             e = new JsonObject();
             JsonObject obj = servicio.get("horoscopo").getAsJsonObject();
+            System.out.println("entro 1 " + obj.get("sunsing").getAsString());
             e.add("titulo", new JsonPrimitive("" + "" + obj.get("horoscope").getAsString()));
             e.add("subtitulo", new JsonPrimitive("" + obj.get("sunsing").getAsString()));
             e.add("url", new JsonPrimitive("" + obj.get("url").getAsString()));
             e.add("buttons", new JsonArray());
             elements.add(e);
         } catch (Exception ex) {
-             e = new JsonObject();
+            e = new JsonObject();
             JsonObject obj = servicio.getAsJsonObject();
+            System.out.println("entro 2 " + obj.get("sunsing").getAsString());
             e.add("titulo", new JsonPrimitive("" + "" + obj.get("horoscope").getAsString()));
             e.add("subtitulo", new JsonPrimitive("" + obj.get("sunsing").getAsString()));
             e.add("url", new JsonPrimitive("" + obj.get("url").getAsString()));
