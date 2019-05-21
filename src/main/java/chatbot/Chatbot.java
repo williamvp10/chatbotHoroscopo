@@ -181,9 +181,13 @@ public class Chatbot {
             out = getbotAgradecer();
         } else if (botIntent.equals("botServicioHoroscopo")) {
             type = "ServicioHoroscopo";
-            botUtterance = "your Horoscope: ";
-            out = getbotServicioHoroscopo();
-            botUtterance += out.get("elements").getAsJsonArray().get(0).getAsJsonObject().get("titulo").getAsString();
+            botUtterance = "";
+            try {
+                out = getbotServicioHoroscopo();
+                botUtterance += out.get("elements").getAsJsonArray().get(0).getAsJsonObject().get("titulo").getAsString();
+            } catch (Exception e) {
+                botUtterance = " no se pudo procesar su solicitud ";
+            }
         }
         out.add("botIntent", context.get("botIntent"));
         out.add("botUtterance", new JsonPrimitive(botUtterance));
@@ -228,8 +232,7 @@ public class Chatbot {
             e = new JsonObject();
             JsonObject obj = servicio.get("horoscopo").getAsJsonObject();
             System.out.println("entro 1 " + obj.get("sunsing").getAsString());
-            e.add("titulo", new JsonPrimitive("" + "" + obj.get("horoscope").getAsString()));
-            e.add("subtitulo", new JsonPrimitive("" + obj.get("sunsing").getAsString()));
+            e.add("titulo", new JsonPrimitive("" + "" + obj.get("sunsing").getAsString()));
             e.add("url", new JsonPrimitive("" + obj.get("url").getAsString()));
             e.add("buttons", new JsonArray());
             elements.add(e);
