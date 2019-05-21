@@ -25,7 +25,7 @@ public class Service {
 
     public JsonObject getServicioHoroscopo(Horoscopo horoscopo)
             throws ClientProtocolException, IOException {
-        String url = "" + "http://horoscope-api.herokuapp.com/horoscope/today/" + horoscopo.getSunsign(); //step 2: Create a HTTP client
+        String url = "" + "https://servicioshoroscopebot.herokuapp.com/myApp/rest/horoscopo/" + horoscopo.getSunsign(); //step 2: Create a HTTP client
         HttpClient httpclient = HttpClientBuilder.create().build();
 
         //step 3: Create a HTTPGet object and execute the url
