@@ -183,7 +183,7 @@ public class Chatbot {
             type = "ServicioHoroscopo";
             botUtterance = "your Horoscope: ";
             out = getbotServicioHoroscopo();
-            botUtterance+=out.get("elements").getAsJsonArray().get(0).getAsJsonObject().get("titulo").getAsString();
+            botUtterance += out.get("elements").getAsJsonArray().get(0).getAsJsonObject().get("titulo").getAsString();
         }
         out.add("botIntent", context.get("botIntent"));
         out.add("botUtterance", new JsonPrimitive(botUtterance));
@@ -224,14 +224,23 @@ public class Chatbot {
         } catch (IOException ex) {
             Logger.getLogger(Chatbot.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        e = new JsonObject();
-        JsonObject obj = servicio.get("horoscopo").getAsJsonObject();
-        e.add("titulo", new JsonPrimitive("" + "" + obj.get("horoscope").getAsString()));
-        e.add("subtitulo", new JsonPrimitive("" + obj.get("sunsing").getAsString()));
-        e.add("url", new JsonPrimitive("" + obj.get("url").getAsString()));
-        e.add("buttons", new JsonArray());
-        elements.add(e);
+        try {
+            e = new JsonObject();
+            JsonObject obj = servicio.get("horoscopo").getAsJsonObject();
+            e.add("titulo", new JsonPrimitive("" + "" + obj.get("horoscope").getAsString()));
+            e.add("subtitulo", new JsonPrimitive("" + obj.get("sunsing").getAsString()));
+            e.add("url", new JsonPrimitive("" + obj.get("url").getAsString()));
+            e.add("buttons", new JsonArray());
+            elements.add(e);
+        } catch (Exception ex) {
+             e = new JsonObject();
+            JsonObject obj = servicio.getAsJsonObject();
+            e.add("titulo", new JsonPrimitive("" + "" + obj.get("horoscope").getAsString()));
+            e.add("subtitulo", new JsonPrimitive("" + obj.get("sunsing").getAsString()));
+            e.add("url", new JsonPrimitive("" + obj.get("url").getAsString()));
+            e.add("buttons", new JsonArray());
+            elements.add(e);
+        }
         out.add("buttons", buttons);
         out.add("elements", elements);
         return out;
