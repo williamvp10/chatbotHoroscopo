@@ -226,7 +226,7 @@ public class Chatbot {
         }
 
         e = new JsonObject();
-        JsonObject obj = servicio;
+        JsonObject obj = servicio.get("horoscopo").getAsJsonObject();
         e.add("titulo", new JsonPrimitive("" + "" + obj.get("horoscope").getAsString()));
         e.add("subtitulo", new JsonPrimitive("" + obj.get("sunsign").getAsString()));
         e.add("url", new JsonPrimitive("" + obj.get("url").getAsString()));
