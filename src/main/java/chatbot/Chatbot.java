@@ -186,6 +186,7 @@ public class Chatbot {
                 out = getbotServicioHoroscopo();
                 botUtterance += out.get("elements").getAsJsonArray().get(0).getAsJsonObject().get("titulo").getAsString();
             } catch (Exception e) {
+                 out = getbotPreguntaSigno();
                 botUtterance = " no se pudo procesar su solicitud ";
             }
         }
@@ -231,7 +232,7 @@ public class Chatbot {
         try {
             e = new JsonObject();
             JsonObject obj = servicio.get("horoscopo").getAsJsonObject();
-            System.out.println("entro 1 " + obj.get("sunsing").getAsString());
+            System.out.println("entro 1 " + obj.get("horoscope").getAsString());
             e.add("titulo", new JsonPrimitive("" + "" + obj.get("sunsing").getAsString()));
             e.add("url", new JsonPrimitive("" + obj.get("url").getAsString()));
             e.add("buttons", new JsonArray());
